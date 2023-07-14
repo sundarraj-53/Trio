@@ -13,7 +13,7 @@
         android:theme="@style/Theme.Trio"
         tools:targetApi="31">
         <activity
-            android:name=".signupemail"
+            android:name=".register_email"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

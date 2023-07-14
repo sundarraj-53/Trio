@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,11 +24,19 @@ public class MainActivity extends AppCompatActivity {
         account_login=findViewById(R.id.createaccount_login);
         email_login=findViewById(R.id.email_login);
         password_login=findViewById(R.id.password_login);
+        Login=findViewById(R.id.login_button);
+        Login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Hii"+account_login, Toast.LENGTH_SHORT).show();;
+            }
+        });
         account_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),signupemail.class));
+                startActivity(new Intent(MainActivity.this,register_email.class));
             }
         });
+
     }
 }
