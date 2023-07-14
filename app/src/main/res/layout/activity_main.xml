@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TRIO"
+        android:id="@+id/title_login"
+        android:gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        android:textSize="45dp"
+        android:textStyle="bold"
+        android:fontFamily="@font/title"
+        />
+
+    <EditText
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="290dp"
+        android:hint="Email"
+        android:textColor="@color/black"
+        android:textColorHint="#5A5555"
+        android:id="@+id/email_login"
+        />
+    <EditText
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/email_login"
+        android:hint="Password"
+        android:textColor="@color/black"
+        android:textColorHint="#5A5555"
+        android:id="@+id/password_login"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Don't have a account ?"
+        android:layout_below="@+id/password_login"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="60dp"
+        android:id="@+id/account_text"
+        android:textColor="#686565"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/password_login"
+        android:id="@+id/createaccount_login"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="220dp"
+        android:text="Create Account"
+        android:textColor="#0248FA" />
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:textColor="#272727"
+        android:textSize="18dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/createaccount_login"
+        android:backgroundTint="#C1C1C1"
+        android:layout_marginTop="25dp"
+        android:id="@+id/login_button"
+        />
+</RelativeLayout>
