@@ -33,6 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
+        android:inputType="textPassword"
         android:layout_below="@+id/email_login"
         android:hint="Password"
         android:textColor="@color/black"

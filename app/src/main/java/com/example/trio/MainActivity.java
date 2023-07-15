@@ -11,6 +11,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class MainActivity extends AppCompatActivity {
 
     TextView login_title,account_login;
@@ -28,7 +42,43 @@ public class MainActivity extends AppCompatActivity {
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Hii"+account_login, Toast.LENGTH_SHORT).show();;
+                String email=email_login.getText().toString();
+                String password=password_login.getText().toString();
+                if(!email.isEmpty() && !password.isEmpty()){
+                    if(isValidEmail(email) && isValidPassword(password)){
+                        int year=Integer.parseInt(email.substring(0,2));
+                        int currentYear= Calendar.getInstance().get(Calendar.YEAR)%100;
+                        if(Math.abs(currentYear-year)>5){
+                            email_login.setError("Sorry user you are not eligible");
+                        }
+                        if(Math.abs(currentYear-year)<5){
+                            try {
+                                postEmail(email,password);
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                        else{
+                            try {
+                                postEmail(email,password);
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }
+                    if(!isValidEmail(email)){
+                        email_login.setError("Please Enter our college Email");
+                    }
+                    if(!isValidPassword(password)){
+                        password_login.setError("Password is Not Strong");
+                    }
+                }
+                if(email.isEmpty()){
+                    email_login.setError("Email is Empty");
+                }
+                if(password.isEmpty()){
+                    password_login.setError("Password is Empty");
+                }
             }
         });
         account_login.setOnClickListener(new View.OnClickListener() {
@@ -38,5 +88,45 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void postEmail(String email,String password) throws JSONException{
+        String url="";
+        JSONObject json=new JSONObject();
+        json.put("email",email);
+        json.put("password",password);
+        RequestQueue queue= Volley.newRequestQueue(MainActivity.this);
+        JsonObjectRequest request=new JsonObjectRequest(Request.Method.POST, url, json,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                                //This phase is On Working
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Toast.makeText(MainActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MainActivity.this, "Volley Error "+error, Toast.LENGTH_SHORT).show();
+                    }
+                });
+        queue.add(request);
+    }
+
+    private boolean isValidPassword(String password){
+        String passwordRegex = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$";
+        Pattern pattern = Pattern.compile(passwordRegex);
+        Matcher matcher=pattern.matcher(password);
+        return matcher.matches();
+    }
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[a-z0-9+_.-]+@nec\\.edu\\.in$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 }
