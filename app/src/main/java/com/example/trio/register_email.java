@@ -50,6 +50,12 @@ public class register_email extends AppCompatActivity{
                         int currentYear= Calendar.getInstance().get(Calendar.YEAR)%100;
                         if(Math.abs(currentYear-year)<5){
                             try {
+                                //Testing Purpose so it can be removed at last
+                                Intent i=new Intent(register_email.this,register_pass.class);
+                                i.putExtra("Email",email);
+                                startActivity(i);
+                                //End
+
                                 postEmail(email);
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
@@ -91,11 +97,13 @@ public class register_email extends AppCompatActivity{
                         try {
                             String res = response.getString("status");
                             if (res.equals("success")) {
-                                startActivity(new Intent(register_email.this,register_pass.class));
+                               Intent i=new Intent(register_email.this,register_pass.class);
+                               i.putExtra("Email",email);
+                               startActivity(i);
                             }
                             else{
                                 String e=response.getString("message");
-                                Toast.makeText(register_email.this, "Hello"+e, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(register_email.this, "Hello "+e, Toast.LENGTH_SHORT).show();
                                 email_register.setError(e);
                             }
                         } catch (Exception e) {

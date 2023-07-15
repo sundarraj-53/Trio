@@ -25,7 +25,72 @@
       android:layout_marginTop="290dp"
       android:hint="Email"
       android:textColor="@color/black"
+      android:editable="false"
       android:textColorHint="#5A5555"
       android:id="@+id/email_registerpass"
       />
-  </RelativeLayout>
+
+  <EditText
+      android:id="@+id/input1_registerpass"
+      android:layout_width="40dp"
+      android:layout_height="45dp"
+      android:layout_below="@+id/email_registerpass"
+      android:layout_marginLeft="68dp"
+      android:layout_marginTop="15dp"
+      android:imeOptions="actionNext"
+      android:importantForAutofill="no"
+      android:inputType="number"
+      android:maxLength="1"
+      android:textColor="@color/black" />
+  <EditText
+      android:id="@+id/input2_registerpass"
+      android:layout_width="40dp"
+      android:layout_height="45dp"
+      android:layout_below="@+id/email_registerpass"
+      android:layout_marginLeft="136dp"
+      android:layout_marginTop="15dp"
+      android:imeOptions="actionNext"
+      android:importantForAutofill="no"
+      android:inputType="number"
+      android:maxLength="1"
+      android:textColor="@color/black"
+      />
+  <EditText
+      android:id="@+id/input3_registerpass"
+      android:layout_width="40dp"
+      android:layout_height="45dp"
+      android:layout_below="@+id/email_registerpass"
+      android:layout_marginLeft="204dp"
+      android:layout_marginTop="15dp"
+      android:imeOptions="actionNext"
+      android:importantForAutofill="no"
+      android:inputType="number"
+      android:maxLength="1"
+      android:textColor="@color/black"
+      />
+  <EditText
+      android:id="@+id/input4_registerpass"
+      android:layout_width="40dp"
+      android:layout_height="45dp"
+      android:layout_below="@+id/email_registerpass"
+      android:layout_marginLeft="272dp"
+      android:layout_marginTop="15dp"
+      android:imeOptions="actionNext"
+      android:importantForAutofill="no"
+      android:inputType="number"
+      android:maxLength="1"
+      android:textColor="@color/black"
+      />
+  <Button
+      android:layout_width="150dp"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/input1_registerpass"
+      android:layout_centerHorizontal="true"
+      android:textColor="#040404"
+      android:backgroundTint="#C1C1C1"
+      android:id="@+id/next_registerpass"
+      android:text="Next"
+      android:textSize="18dp"
+      android:layout_marginTop="35dp"
+      />
+</RelativeLayout>
