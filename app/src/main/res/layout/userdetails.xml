@@ -29,6 +29,8 @@
             android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:backgroundTint="#53A59E"
+            android:outlineAmbientShadowColor="@color/black"
             android:layout_marginTop="20dp"
             android:id="@+id/Department_registeruser_student"
             android:layout_below="@+id/Lname_registeruser_student"
@@ -72,6 +74,7 @@
         <Spinner
             android:layout_width="280dp"
             android:layout_height="wrap_content"
+            android:clickable="true"
             android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true"
             android:id="@+id/position_registeruser_student"

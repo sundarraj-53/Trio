@@ -7,9 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".register_useredit"
     >
-    <include layout="@layout/student"
-        android:visibility="invisible"/>
-    <include layout="@layout/faculty"
+    <include layout="@layout/userdetails"
         android:visibility="invisible"/>
     <TextView
         android:layout_width="wrap_content"
@@ -55,15 +53,7 @@
         android:layout_marginTop="50dp"
         android:layout_below="@+id/registeruser_title"
         android:id="@+id/studentviewStub"
-        android:layout="@layout/student"
+        android:layout="@layout/userdetails"
        />
-    <ViewStub
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
-        android:layout_below="@+id/registeruser_title"
-        android:id="@+id/facultyviewStub"
-        android:layout="@layout/faculty"
-        />
 
 </RelativeLayout>
