@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <EditText
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:hint="First Name"
+        android:textColorHint="#373535"
+        android:id="@+id/Fname_registeruser_faculty"
+        android:inputType="text"
+        android:textColor="@color/black"
+        />
+    <EditText
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:hint="Last Name"
+        android:layout_below="@+id/Fname_registeruser_faculty"
+        android:textColorHint="#373535"
+        android:id="@+id/Lname_registeruser_faculty"
+        android:layout_marginTop="15dp"
+        android:inputType="text"
+        android:textColor="@color/black"
+        />
+    <Spinner
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:id="@+id/Department_registeruser_faculty"
+        android:layout_below="@+id/Lname_registeruser_faculty"
+        />
+    <EditText
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:hint="Password"
+        android:layout_below="@+id/Department_registeruser_faculty"
+        android:textColorHint="#373535"
+        android:id="@+id/password_registeruser_faculty"
+        android:layout_marginTop="15dp"
+        android:inputType="textPassword"
+        android:textColor="@color/black"
+        />
+    <EditText
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:hint="Confirm Password"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/password_registeruser_faculty"
+        android:textColorHint="#373535"
+        android:id="@+id/conpassword_registeruser_faculty"
+        android:layout_marginTop="15dp"
+        android:inputType="textPassword"
+        android:textColor="@color/black"
+        />
+    <EditText
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:hint="Phone no"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/conpassword_registeruser_faculty"
+        android:textColorHint="#373535"
+        android:id="@+id/phoneno_registeruser_faculty"
+        android:layout_marginTop="15dp"
+        android:inputType="number"
+        android:textColor="@color/black"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Are You a Blood donor"
+        android:layout_marginLeft="80dp"
+        android:id="@+id/bloodtext_registeruser_faculty"
+        android:layout_marginTop="25dp"
+        android:textSize="21dp"
+        android:layout_below="@+id/phoneno_registeruser_faculty"
+        android:fontFamily="@font/title"
+        />
+
+    <CheckBox
+        android:id="@+id/facu_checked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/phoneno_registeruser_faculty"
+        android:layout_marginLeft="350dp"
+        android:layout_marginTop="15dp"
+        />
+
+</RelativeLayout>

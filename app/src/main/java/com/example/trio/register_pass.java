@@ -51,14 +51,11 @@ public class register_pass extends AppCompatActivity {
                     int password=(a*1000+b*100+c*10+d*1);
                     String email=i.getStringExtra("Email");
                     try {
-                        //Testing till the backend is connect
-                        Intent u=new Intent(register_pass.this,register_user.class);
-                        startActivity(u);
-                        //End
-
+                        startActivity(new Intent(register_pass.this,register_useredit.class));
                         postEmailPassword(email,password);
                     }
                     catch (JSONException e) {
+                        Log.e(TAG,"Exception Occured "+e.getMessage());
                         throw new RuntimeException(e);
                     }
 
@@ -69,7 +66,7 @@ public class register_pass extends AppCompatActivity {
     }
 
     private void postEmailPassword(String email, int password) throws JSONException {
-        String url="";
+        String url="http://10.11.6.27:3000/api/v1/users/signuppassword";
         RequestQueue queue= Volley.newRequestQueue(register_pass.this);
         JSONObject json=new JSONObject();
         json.put("email",email);
@@ -81,7 +78,7 @@ public class register_pass extends AppCompatActivity {
                             try {
                                  String res=response.getString("status");
                                  if(res.equals("success")){
-                                   startActivity(new Intent(register_pass.this,register_user.class));
+                                   startActivity(new Intent(register_pass.this,register_useredit.class));
                                  }
                                  else{
                                      String e=response.getString("message");
@@ -89,7 +86,7 @@ public class register_pass extends AppCompatActivity {
                                  }
                             }
                             catch (Exception e){
-                                Log.e(TAG,"Exception Occured "+e.getMessage());
+                                Log.e(TAG,"Method Exception Occured "+e.getMessage());
                                 Toast.makeText(register_pass.this, "Error due to "+e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                     }

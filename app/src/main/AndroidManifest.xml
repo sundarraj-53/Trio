@@ -16,7 +16,7 @@
         android:theme="@style/Theme.Trio"
         tools:targetApi="31">
         <activity
-            android:name=".register_user"
+            android:name=".register_useredit"
             android:exported="false" />
         <activity
             android:name=".register_pass"
