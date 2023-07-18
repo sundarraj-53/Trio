@@ -50,9 +50,13 @@ public class register_pass extends AppCompatActivity {
                     int d=Integer.parseInt(input4.getText().toString());
                     int password=(a*1000+b*100+c*10+d*1);
                     String email=i.getStringExtra("Email");
+                    String Student=i.getStringExtra("Type");
                     try {
-                        startActivity(new Intent(register_pass.this,register_useredit.class));
-                        postEmailPassword(email,password);
+//                        Intent u=new Intent(register_pass.this,register.class);
+//                        u.putExtra("Email",email);
+//                        u.putExtra("type",Student);
+//                        startActivity(u);
+                        postEmailPassword(email,password,Student);
                     }
                     catch (JSONException e) {
                         Log.e(TAG,"Exception Occured "+e.getMessage());
@@ -65,7 +69,7 @@ public class register_pass extends AppCompatActivity {
 
     }
 
-    private void postEmailPassword(String email, int password) throws JSONException {
+    private void postEmailPassword(String email, int password,String Student) throws JSONException {
         String url="http://10.11.6.27:3000/api/v1/users/signuppassword";
         RequestQueue queue= Volley.newRequestQueue(register_pass.this);
         JSONObject json=new JSONObject();
@@ -77,12 +81,18 @@ public class register_pass extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                             try {
                                  String res=response.getString("status");
+                                 Log.d("Hii",res);
+                                Toast.makeText(register_pass.this, "Hii"+res, Toast.LENGTH_SHORT).show();
                                  if(res.equals("success")){
-                                   startActivity(new Intent(register_pass.this,register_useredit.class));
+                                     Intent i=new Intent(register_pass.this,register.class);
+                                     i.putExtra("Email",email);
+                                     i.putExtra("type",Student);
+                                   startActivity(i);
                                  }
                                  else{
                                      String e=response.getString("message");
                                      Toast.makeText(register_pass.this, "Hello user "+e, Toast.LENGTH_SHORT).show();
+                                     input4.setError("Password is wrong");
                                  }
                             }
                             catch (Exception e){

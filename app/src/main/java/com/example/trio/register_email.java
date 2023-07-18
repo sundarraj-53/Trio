@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 public class register_email extends AppCompatActivity{
 
     TextView register_title;
-    private static final int MY_TIMEOUT_MS = 100000;
+    private static final int MY_TIMEOUT_MS = 1000000;
     EditText email_register;
     Button next;
     @Override
@@ -45,33 +45,43 @@ public class register_email extends AppCompatActivity{
             public void onClick(View v) {
                 String email=email_register.getText().toString();
                 if(!email.isEmpty()){
-                    if(isValidEmail(email)){
-                        int year=Integer.parseInt(email.substring(0,2));
-                        int currentYear= Calendar.getInstance().get(Calendar.YEAR)%100;
-                        if(Math.abs(currentYear-year)<5){
-                            try {
-                                //Testing Purpose so it can be removed at last
-                                Intent i=new Intent(register_email.this,register_pass.class);
-                                i.putExtra("Email",email);
-                                startActivity(i);
-                                //End
-
-                                postEmail(email);
-                            } catch (JSONException e) {
-                                throw new RuntimeException(e);
+                    if(isValidEmail(email)) {
+                        if(Character.isDigit(email.charAt(0))) {
+                            int year = Integer.parseInt(email.substring(0, 2));
+                            int currentYear = Calendar.getInstance().get(Calendar.YEAR) % 100;
+                            if (Math.abs(currentYear - year) > 4) {
+                                email_register.setError("Sorry user you are not eligible");
+                            }
+                            if (Math.abs(currentYear - year) < 5) {
+                                try {
+                                    String Student="Student";
+//                                //Testing Purpose so it can be removed at last
+//                                Intent i=new Intent(register_email.this,register_pass.class);
+//                                i.putExtra("Email",email);
+//                                i.putExtra("Type",Student);
+//                                startActivity(i);
+//                                //End
+//                                    Toast.makeText(register_email.this, "If-postEmail(email)", Toast.LENGTH_SHORT).show();
+                                    postEmail(email,Student);
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
                             }
                         }
-                        if(Math.abs(currentYear-year)>4){
-                            email_register.setError("Sorry user you are not eligible");
-                        }
-                        else{
-                            try {
-                                postEmail(email);
-                            } catch (JSONException e) {
-                                throw new RuntimeException(e);
+                        else {
+                                try {
+                                    String Student="Faculty";
+//                                    Intent i=new Intent(register_email.this,register_pass.class);
+//                                    i.putExtra("Email",email);
+//                                    i.putExtra("Type",Student);
+//                                    startActivity(i);
+//                                    Toast.makeText(register_email.this, "else-Request Sent", Toast.LENGTH_SHORT).show();
+                                    postEmail(email,Student);
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
                             }
                         }
-                    }
                     else{
                         email_register.setError("Please Enter our college Email");
                     }
@@ -84,11 +94,12 @@ public class register_email extends AppCompatActivity{
         });
     }
 
-    private void postEmail(String email) throws JSONException {
+    private void postEmail(String email,String Student) throws JSONException {
         String url="http://10.11.6.27:3000/api/v1/users/signupemail";
         JSONObject json=new JSONObject();
         json.put("email",email);
         RequestQueue queue= Volley.newRequestQueue(register_email.this);
+
         JsonObjectRequest request=new JsonObjectRequest(Request.Method.POST, url, json,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -96,12 +107,16 @@ public class register_email extends AppCompatActivity{
                         Toast.makeText(register_email.this, "Waiting For response", Toast.LENGTH_SHORT).show();
                         try {
                             String res = response.getString("status");
+                            Toast.makeText(register_email.this, "Response received", Toast.LENGTH_SHORT).show();
+
                             if (res.equals("success")) {
                                Intent i=new Intent(register_email.this,register_pass.class);
                                i.putExtra("Email",email);
+                               i.putExtra("Type",Student);
                                startActivity(i);
                             }
-                            else{
+                            else
+                            {
                                 String e=response.getString("message");
                                 Toast.makeText(register_email.this, "Hello "+e, Toast.LENGTH_SHORT).show();
                                 email_register.setError(e);

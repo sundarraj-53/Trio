@@ -1,13 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    tools:context=".register">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Register"
+            android:id="@+id/registeruser_title"
+            android:gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="80dp"
+            android:textSize="45dp"
+            android:textStyle="bold"
+            android:fontFamily="@font/title"
+            />
         <EditText
             android:layout_width="280dp"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/registeruser_title"
             android:layout_centerHorizontal="true"
             android:hint="First Name"
+            android:layout_marginTop="20dp"
             android:textColorHint="#373535"
             android:id="@+id/Fname_registeruser_student"
             android:inputType="text"
@@ -27,11 +51,10 @@
             />
         <Spinner
             android:layout_width="280dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_centerHorizontal="true"
-            android:backgroundTint="#53A59E"
-            android:outlineAmbientShadowColor="@color/black"
             android:layout_marginTop="20dp"
+            android:background="#D9DCDD"
             android:id="@+id/Department_registeruser_student"
             android:layout_below="@+id/Lname_registeruser_student"
             />
@@ -71,33 +94,49 @@
             android:inputType="number"
             android:textColor="@color/black"
             />
-        <Spinner
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:layout_marginTop="20dp"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/position_registeruser_student"
-            android:layout_below="@+id/phoneno_registeruser_student"
-            />
+
         <TextView
+            android:id="@+id/bloodtext_registeruser_student"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Are You a Blood donor"
-            android:layout_marginLeft="80dp"
-            android:id="@+id/bloodtext_registeruser_student"
-            android:layout_marginTop="25dp"
-            android:textSize="21dp"
-            android:layout_below="@+id/position_registeruser_student"
+            android:layout_below="@+id/phoneno_registeruser_student"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="34dp"
             android:fontFamily="@font/title"
-            />
+            android:text="Are You a Blood donor"
+            android:textSize="21dp" />
 
         <CheckBox
             android:id="@+id/stud_checked"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/position_registeruser_student"
-            android:layout_marginLeft="350dp"
-            android:layout_marginTop="15dp"
+            android:layout_below="@+id/phoneno_registeruser_student"
+            android:layout_marginLeft="330dp"
+            android:checked="false"
+            android:layout_marginTop="28dp"
             />
+        <Spinner
+            android:layout_width="280dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/bloodtext_registeruser_student"
+            android:background="#D9DCDD"
+            android:visibility="gone"
+            android:id="@+id/blooddonor_ml"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:clickable="true"
+            android:id="@+id/submit"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/blooddonor_ml"
+            android:textColor="#040404"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="#C1C1C1"
+            />
+        </RelativeLayout>
+        </ScrollView>
 </RelativeLayout>
