@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -44,8 +46,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email=email_login.getText().toString();
                 String password=password_login.getText().toString();
+              //Working Purpose
+                startActivity(new Intent(MainActivity.this,home_act.class));
+
+               //end
                 if(!email.isEmpty() && !password.isEmpty()){
-                    if(isValidEmail(email) && isValidPassword(password)){
+                    if(isValidEmail(email)){
                         int year=Integer.parseInt(email.substring(0,2));
                         int currentYear= Calendar.getInstance().get(Calendar.YEAR)%100;
                         if(Math.abs(currentYear-year)>5){
@@ -69,9 +75,6 @@ public class MainActivity extends AppCompatActivity {
                     if(!isValidEmail(email)){
                         email_login.setError("Please Enter our college Email");
                     }
-                    if(!isValidPassword(password)){
-                        password_login.setError("Password is Not Strong");
-                    }
                 }
                 if(email.isEmpty()){
                     email_login.setError("Email is Empty");
@@ -91,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void postEmail(String email,String password) throws JSONException{
-        String url="";
+        String url="http://10.11.6.27:3000/api/v1/users/login";
         JSONObject json=new JSONObject();
         json.put("email",email);
         json.put("password",password);
@@ -101,7 +104,14 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                                //This phase is On Working
+                            String res=response.getString("status");
+                            if(res.equals("success")){
+                                startActivity(new Intent(MainActivity.this,home_act.class));
+                            }
+                            if(res.equals("error")){
+                                password_login.setError(res);
+                            }
+
                         } catch (Exception e) {
                             e.printStackTrace();
                             Toast.makeText(MainActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
@@ -111,17 +121,17 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, "Volley Error "+error, Toast.LENGTH_SHORT).show();
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.statusCode == 300) {
+                            startActivity(new Intent(MainActivity.this,register.class));
+
+                        }
+                        else{
+                            Toast.makeText(MainActivity.this, "Volley Error", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
         queue.add(request);
-    }
-
-    private boolean isValidPassword(String password){
-        String passwordRegex = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$";
-        Pattern pattern = Pattern.compile(passwordRegex);
-        Matcher matcher=pattern.matcher(password);
-        return matcher.matches();
     }
     private boolean isValidEmail(String email) {
         String emailRegex = "^[a-z0-9+_.-]+@nec\\.edu\\.in$";

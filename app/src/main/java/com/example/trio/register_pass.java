@@ -105,7 +105,8 @@ public class register_pass extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
-                        Toast.makeText(register_pass.this, "Error Occured "+error, Toast.LENGTH_SHORT).show();
+                        Log.d("register_pass",error.toString());
+                        Toast.makeText(register_pass.this, "Error Occured "+error.toString(), Toast.LENGTH_SHORT).show();
                     }
                 });
         queue.add(request);

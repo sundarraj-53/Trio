@@ -104,11 +104,10 @@ public class register_email extends AppCompatActivity{
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Toast.makeText(register_email.this, "Waiting For response", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(register_email.this, "Waiting For response", Toast.LENGTH_SHORT).show();
                         try {
                             String res = response.getString("status");
-                            Toast.makeText(register_email.this, "Response received", Toast.LENGTH_SHORT).show();
-
+//                            Toast.makeText(register_email.this, "Response received", Toast.LENGTH_SHORT).show();
                             if (res.equals("success")) {
                                Intent i=new Intent(register_email.this,register_pass.class);
                                i.putExtra("Email",email);

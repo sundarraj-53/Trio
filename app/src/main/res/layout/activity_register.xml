@@ -49,14 +49,25 @@
             android:inputType="text"
             android:textColor="@color/black"
             />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Department"
+                android:textSize="18dp"
+                android:layout_below="@+id/Lname_registeruser_student"
+                android:id="@+id/dept_id"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/title"
+                android:layout_marginLeft="62dp"
+                />
         <Spinner
             android:layout_width="280dp"
             android:layout_height="40dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:background="#D9DCDD"
             android:id="@+id/Department_registeruser_student"
-            android:layout_below="@+id/Lname_registeruser_student"
+            android:layout_below="@+id/dept_id"
             />
         <EditText
             android:layout_width="280dp"
@@ -115,12 +126,25 @@
             android:checked="false"
             android:layout_marginTop="28dp"
             />
-        <Spinner
+
+            <TextView
+                android:id="@+id/bloodgr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bloodtext_registeruser_student"
+                android:layout_marginLeft="62dp"
+                android:visibility="gone"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/title"
+                android:text="Blood Group"
+                android:textSize="18dp" />
+
+            <Spinner
             android:layout_width="280dp"
             android:layout_height="40dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:layout_below="@+id/bloodtext_registeruser_student"
+                android:layout_marginLeft="70dp"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/bloodgr"
             android:background="#D9DCDD"
             android:visibility="gone"
             android:id="@+id/blooddonor_ml"

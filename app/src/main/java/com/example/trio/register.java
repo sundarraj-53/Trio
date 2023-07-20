@@ -36,8 +36,10 @@ public class register extends AppCompatActivity {
     Spinner Department, blood;
     CheckBox check;
     Button Submit;
-    String[] Dept = {"Select Department", "IT", "ECE", "EEE", "MECH", "CSE", "CIVIL"};
-    String[] bloodgroup = {"Blood Group", "B+", "B-", "A+", "A-", "O+", "O-", "AB+", "AB-"};
+    String[] Dept = {"", "IT", "ECE", "EEE", "MECH", "CSE", "CIVIL"};
+    String[] bloodgroup = {"", "B+", "B-", "A+", "A-", "O+", "O-", "AB+", "AB-"};
+    String bloodGroup;
+    TextView bloodgr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,7 @@ public class register extends AppCompatActivity {
         check = findViewById(R.id.stud_checked);
         blood = findViewById(R.id.blooddonor_ml);
         Submit = findViewById(R.id.submit);
+        bloodgr=findViewById(R.id.bloodgr);
         ArrayAdapter<String> adt = new ArrayAdapter<>(register.this, android.R.layout.simple_spinner_dropdown_item, bloodgroup);
         blood.setAdapter(adt);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(register.this, android.R.layout.simple_spinner_dropdown_item, Dept);
@@ -64,9 +67,11 @@ public class register extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+                    bloodgr.setVisibility(View.VISIBLE);
                     blood.setVisibility(View.VISIBLE);
                 } else {
                     blood.setVisibility(View.GONE);
+                    bloodgr.setVisibility(View.GONE);
                 }
             }
         });
@@ -80,8 +85,8 @@ public class register extends AppCompatActivity {
                 String confirmPassword = confirmpassword.getText().toString();
                 String phoneNo = phoneno.getText().toString();
                 String bloodGroup = blood.getSelectedItem().toString();
+                Toast.makeText(register.this, "BLood Group"+bloodGroup, Toast.LENGTH_SHORT).show();
                 if (!firstName.isEmpty() && !lastName.isEmpty() && !department.isEmpty() && !password.isEmpty() && !confirmPassword.isEmpty() && !phoneNo.isEmpty() && bloodGroup.isEmpty() || !bloodGroup.isEmpty()) {
-                    Toast.makeText(register.this, "Blood Group not needed", Toast.LENGTH_SHORT).show();
                     if (isValidPassword(password)) {
                         if (password.equals(confirmPassword)) {
                             try {

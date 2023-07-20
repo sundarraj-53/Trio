@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp">
+    <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rl"
+            >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="460dp"
+            android:src="@drawable/dummypost"
+            android:id="@+id/post"
+            />
+        </RelativeLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom"
+            android:layout_below="@+id/rl"
+            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#DBE2EF"
+                >
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/idCVAuthor"
+                android:layout_width="40dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="5dp"
+                android:src="@drawable/circle" />
+
+                <TextView
+                    android:id="@+id/club_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="48dp"
+                    android:layout_marginTop="15dp"
+                    android:text="NSS CLUB"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@+id/post"
+                    android:id="@+id/like"
+                    android:src="@drawable/baseline_favorite_border_24"
+                    android:layout_alignParentRight="true"
+                    android:backgroundTint="#00887777"
+                    />
+                <ImageButton
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@+id/like"
+                    android:src="@drawable/baseline_chat_bubble_24"
+                    android:layout_alignParentRight="true"
+                    android:backgroundTint="#00887777"
+                    />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
+
+</RelativeLayout>
