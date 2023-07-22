@@ -1,4 +1,4 @@
-package com.example.trio;
+package com.example.trio.signUp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,6 +20,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.trio.MainActivity;
+import com.example.trio.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -141,7 +143,7 @@ public class register extends AppCompatActivity {
                 try{
                     String res=response.getString("status");
                     if(res.equals("success")){
-                        startActivity(new Intent(register.this,MainActivity.class));
+                        startActivity(new Intent(register.this, MainActivity.class));
                     }
                     if(res.equals("error")){
                         startActivity(new Intent(register.this,MainActivity.class));

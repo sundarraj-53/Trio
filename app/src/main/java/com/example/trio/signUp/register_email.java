@@ -1,4 +1,4 @@
-package com.example.trio;
+package com.example.trio.signUp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,11 +18,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.trio.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.time.Year;
 import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -109,7 +109,7 @@ public class register_email extends AppCompatActivity{
                             String res = response.getString("status");
 //                            Toast.makeText(register_email.this, "Response received", Toast.LENGTH_SHORT).show();
                             if (res.equals("success")) {
-                               Intent i=new Intent(register_email.this,register_pass.class);
+                               Intent i=new Intent(register_email.this, register_pass.class);
                                i.putExtra("Email",email);
                                i.putExtra("Type",Student);
                                startActivity(i);

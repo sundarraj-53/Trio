@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cdView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Blood Group:"
+            android:textSize="20dp"
+            android:id="@+id/blood_gr"
+            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Blood value"
+                android:textSize="20dp"
+                android:id="@+id/blood_value"
+                android:layout_marginLeft="130dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Department:"
+                android:textSize="20dp"
+                android:id="@+id/department_gr"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/blood_gr"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Department Value"
+                android:textSize="20dp"
+                android:layout_below="@+id/blood_value"
+                android:id="@+id/department_value"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="130dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phone No:"
+                android:textSize="20dp"
+                android:id="@+id/phoneno_gr"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/department_gr"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Department Value"
+                android:textSize="20dp"
+                android:layout_below="@+id/department_value"
+                android:id="@+id/phoneno_value"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="130dp"
+                />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

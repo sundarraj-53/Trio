@@ -1,14 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
-    tools:context=".BloodFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    tools:context=".bloodDonor.BloodFragment">
+    <include layout="@layout/donor_details"
+        android:visibility="gone"/>
+    <include layout="@layout/blood_list"
+        android:visibility="gone"
+        />
+    <include layout="@layout/filter_splash"
+        android:visibility="gone"
+        />
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
-</FrameLayout>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/blood_donor_title"
+        android:text="Blood donors"
+        android:fontFamily="@font/home"
+        android:textSize="28dp"
+        android:layout_margin="15dp"
+        android:layout_marginLeft="5dp"
+        android:textStyle="bold"
+        />
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="13dp"
+        android:background="@drawable/custom"
+        android:padding="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_below="@+id/blood_donor_title"
+        android:id="@+id/searchEt"
+        android:hint="Search"
+        android:drawableLeft="@drawable/baseline_search_24"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/blood_donor_title"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="15dp"
+        android:id="@+id/filter"
+        android:clickable="true"
+        android:src="@drawable/baseline_filter_list_24" />
+    <ViewStub
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/filter_view"
+        android:layout_below="@+id/filter"
+        android:layout="@layout/filter_splash"
+        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/filter_view"
+        android:layout_marginTop="25dp"
+        android:id="@+id/recycle"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/blood_list"
+        />
+    </RelativeLayout>

@@ -1,4 +1,4 @@
-package com.example.trio;
+package com.example.trio.signUp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.trio.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -84,7 +85,7 @@ public class register_pass extends AppCompatActivity {
                                  Log.d("Hii",res);
                                 Toast.makeText(register_pass.this, "Hii"+res, Toast.LENGTH_SHORT).show();
                                  if(res.equals("success")){
-                                     Intent i=new Intent(register_pass.this,register.class);
+                                     Intent i=new Intent(register_pass.this, com.example.trio.signUp.register.class);
                                      i.putExtra("Email",email);
                                      i.putExtra("type",Student);
                                    startActivity(i);

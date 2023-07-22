@@ -1,73 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
+
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/material"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="2dp">
-    <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/rl"
-            >
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="460dp"
-            android:src="@drawable/dummypost"
-            android:id="@+id/post"
-            />
-        </RelativeLayout>
+        android:layout_margin="8dp">
 
-        <androidx.cardview.widget.CardView
+        <ImageView
+            android:id="@+id/post"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_gravity="bottom"
+            android:layout_height="450dp"
+            android:src="@drawable/dummypost" />
+    </com.google.android.material.card.MaterialCardView>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_marginTop="-35dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/material">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_below="@+id/rl"
-            >
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#DBE2EF"
-                >
+            android:layout_margin="8dp"
+            android:background="#DBE2EF">
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/idCVAuthor"
                 android:layout_width="40dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="4dp"
+                android:layout_height="50dp"
                 android:layout_marginBottom="5dp"
-                android:src="@drawable/circle" />
+                android:src="@drawable/ic_launcher_background" />
 
-                <TextView
-                    android:id="@+id/club_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="48dp"
-                    android:layout_marginTop="15dp"
-                    android:text="NSS CLUB"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
+            <TextView
+                android:id="@+id/club_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="46dp"
+                android:layout_marginTop="12dp"
+                android:text="NSS CLUB"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
-                <ImageButton
-                    android:layout_width="50dp"
-                    android:layout_height="30dp"
-                    android:layout_below="@+id/post"
-                    android:id="@+id/like"
-                    android:src="@drawable/baseline_favorite_border_24"
-                    android:layout_alignParentRight="true"
-                    android:backgroundTint="#00887777"
-                    />
-                <ImageButton
-                    android:layout_width="50dp"
-                    android:layout_height="30dp"
-                    android:layout_below="@+id/like"
-                    android:src="@drawable/baseline_chat_bubble_24"
-                    android:layout_alignParentRight="true"
-                    android:backgroundTint="#00887777"
-                    />
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
-    </com.google.android.material.card.MaterialCardView>
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/club_name"
+                android:layout_marginStart="18dp"
+                android:layout_marginLeft="38dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="18dp"
+                android:layout_marginRight="38dp"
+                android:layout_marginBottom="10dp"
+                android:text="Club Name"
+                android:textSize="16dp" />
 
+            <TextView
+                android:id="@+id/count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/post"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="60dp"
+                android:backgroundTint="#00887777"
+                android:text="0 likes"
+                android:textSize="20dp"
+                />
+
+            <!--            <TextView-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_below="@+id/post"-->
+            <!--                android:layout_alignParentRight="true"-->
+            <!--                android:layout_marginTop="18dp"-->
+            <!--                android:layout_marginRight="58dp"-->
+            <!--                android:backgroundTint="#00887777"-->
+            <!--                android:text="likes"-->
+            <!--                android:textSize="16dp"-->
+            <!--                android:textStyle="bold" />-->
+
+            <ToggleButton
+                android:id="@+id/like"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/toggle_selector"
+                android:onClick="onCustomToggleClick"
+                android:textOff=""
+                android:textOn="" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_below="@+id/like"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="13dp"
+                android:layout_marginRight="20dp"
+                android:backgroundTint="#00887777"
+                android:src="@drawable/baseline_chat_bubble_24" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 </RelativeLayout>

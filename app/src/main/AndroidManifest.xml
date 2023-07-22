@@ -15,20 +15,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Trio"
         tools:targetApi="31">
-        <activity
-            android:name=".home_act"
-            android:exported="false" />
+
         <activity
             android:name=".home"
+            android:exported="false"
+            android:windowSoftInputMode="adjustNothing"/>
+        <activity
+            android:name=".signUp.register"
             android:exported="false" />
         <activity
-            android:name=".register"
+            android:name=".signUp.register_pass"
             android:exported="false" />
         <activity
-            android:name=".register_pass"
-            android:exported="false" />
-        <activity
-            android:name=".register_email"
+            android:name=".signUp.register_email"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

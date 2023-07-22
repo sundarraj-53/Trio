@@ -5,33 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".home">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/home_title"
-        android:text="Home"
-        android:fontFamily="@font/home"
-        android:textSize="28dp"
-        android:layout_margin="15dp"
-        android:layout_marginLeft="5dp"
-        android:textStyle="bold"
-        />
-    <ScrollView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/home_title"
-        >
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
-            >
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/post" />
-        </RelativeLayout>
-    </ScrollView>
+        android:id="@+id/container"
+        android:layout_above="@id/bottom_navigation"
+        />
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#7CAAE1"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_nav_menu"
+        />
 </RelativeLayout>

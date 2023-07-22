@@ -2,10 +2,8 @@ package com.example.trio;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +17,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.trio.Storage.Storage;
+import com.example.trio.signUp.register;
+import com.example.trio.signUp.register_email;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     TextView login_title,account_login;
     EditText email_login,password_login;
     Button Login;
+    Storage store=new Storage();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 String email=email_login.getText().toString();
                 String password=password_login.getText().toString();
               //Working Purpose
-                startActivity(new Intent(MainActivity.this,home_act.class));
+                startActivity(new Intent(MainActivity.this, home.class));
 
                //end
                 if(!email.isEmpty() && !password.isEmpty()){
@@ -87,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         account_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,register_email.class));
+                startActivity(new Intent(MainActivity.this, register_email.class));
             }
         });
 
@@ -105,8 +107,10 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             String res=response.getString("status");
+                            String token=response.getString("token");
                             if(res.equals("success")){
-                                startActivity(new Intent(MainActivity.this,home_act.class));
+                                store.saveUsername(token);
+//                                startActivity(new Intent(MainActivity.this,home.class));
                             }
                             if(res.equals("error")){
                                 password_login.setError(res);
@@ -123,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         NetworkResponse networkResponse = error.networkResponse;
                         if (networkResponse != null && networkResponse.statusCode == 300) {
-                            startActivity(new Intent(MainActivity.this,register.class));
+                            startActivity(new Intent(MainActivity.this, register.class));
 
                         }
                         else{
