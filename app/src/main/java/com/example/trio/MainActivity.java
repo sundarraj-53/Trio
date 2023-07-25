@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 String email=email_login.getText().toString();
                 String password=password_login.getText().toString();
               //Working Purpose
-                startActivity(new Intent(MainActivity.this, home.class));
+//                startActivity(new Intent(MainActivity.this, home.class));
 
                //end
                 if(!email.isEmpty() && !password.isEmpty()){
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                             String token=response.getString("token");
                             if(res.equals("success")){
                                 store.saveUsername(token);
-//                                startActivity(new Intent(MainActivity.this,home.class));
+                                startActivity(new Intent(MainActivity.this,home.class));
                             }
                             if(res.equals("error")){
                                 password_login.setError(res);

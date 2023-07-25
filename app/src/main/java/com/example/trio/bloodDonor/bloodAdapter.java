@@ -1,6 +1,7 @@
 package com.example.trio.bloodDonor;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,21 +18,19 @@ import com.example.trio.R;
 import java.util.ArrayList;
 
 public class bloodAdapter extends RecyclerView.Adapter<bloodAdapter.ViewHolder> implements Filterable {
-    public static ArrayList<com.example.trio.bloodDonor.blood> arrayList;
+    public static ArrayList<blood> arrayList;
     public static ArrayList<blood> filterList;
     Context context;
     private static bloodFilter blood;
-    public bloodAdapter(ArrayList<com.example.trio.bloodDonor.blood> arrayList, ArrayList<com.example.trio.bloodDonor.blood> filterList, Context context) {
+    public bloodAdapter(ArrayList<blood> arrayList, ArrayList<blood> filterList, Context context) {
         this.arrayList = arrayList;
         this.filterList = filterList;
         this.context = context;
     }
 
-
-
-
-
-
+    public bloodAdapter(ArrayList<blood> arrayList) {
+        this.arrayList=arrayList;
+    }
 
     @NonNull
     @Override
@@ -44,15 +43,21 @@ public class bloodAdapter extends RecyclerView.Adapter<bloodAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
          blood ble=arrayList.get(position);
+        Log.d("SUNDAR", String.valueOf(Integer.parseInt(String.valueOf(ble.getProfile()))));
         holder.profile.setImageResource(Integer.parseInt(String.valueOf(ble.getProfile())));
+        Log.d("SUNDAR",ble.getName());
         holder.Name_value.setText(ble.getName());
-        holder.department_value.setText(ble.getDepartment());
-        holder.blood_value.setText(ble.getBloodgroup());
-        holder.phoneNo_value.setText(ble.getPhoneno());
+//        Log.d("SUNDAR",ble.getDepartment());
+//        holder.department_value.setText(ble.getDepartment());
+//        Log.d("SUNDAR",ble.getBloodgroup());
+//        holder.blood_value.setText(ble.getBloodgroup());
+//        Log.d("SUNDAR",ble.getPhoneno());
+//        holder.phoneNo_value.setText(ble.getPhoneno());
     }
 
     @Override
     public int getItemCount() {
+
         return arrayList.size();
     }
 

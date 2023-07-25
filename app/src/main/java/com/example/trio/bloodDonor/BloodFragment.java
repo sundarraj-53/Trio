@@ -3,10 +3,12 @@ package com.example.trio.bloodDonor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.trio.R;
 import com.example.trio.Storage.Storage;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -74,6 +77,7 @@ public class BloodFragment extends Fragment {
             }
         });
         loadBloodDonor();
+
         search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -84,6 +88,7 @@ public class BloodFragment extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
                     adapter.getFilter().filter(s);
+                    loadBloodDonor();
 
                 }
                 catch (Exception e){
@@ -108,22 +113,30 @@ public class BloodFragment extends Fragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+//                        Toast.makeText(getContext(), "Hii "+response, Toast.LENGTH_SHORT).show();
 
                         try {
-                            JSONObject dataObject = response.getJSONObject("data").getJSONObject("user");
+                            JSONArray dataObject = response.getJSONObject("data").getJSONArray("user");
+//                            JSONArray array=dataObject.getJSONArray("value");
                             int j=response.getInt("result");
+                            Log.d("SUNDAR", String.valueOf(dataObject));
                             for (int i=0; i <j; i++) {
-                                String firstN = dataObject.getString("firstName");
-                                String lastN = dataObject.getString("lastName");
+                                JSONObject userObject = dataObject.getJSONObject(i);
+                                Log.d("SUNDAR", String.valueOf(userObject));
+                                String firstN =userObject.getString("firstName");
+                                String lastN = userObject.getString("lastName");
                                 String name = firstN + " " + lastN;
-                                String department = dataObject.getString("department");
-                                String phoneNo = dataObject.getString("phoneNo");
-                                String blood = dataObject.getString("bloodGroup");
-                                String profile = dataObject.optString("image", "");
+                                String department = userObject.getString("department");
+                                String phoneNo = userObject.getString("phoneNo");
+                                String blood = userObject.getString("bloodGroup");
+                                String profile = userObject.optString("image", "");
                                 if (profile.isEmpty()) {
                                     profile = String.valueOf(R.drawable.baseline_account_circle_24);
                                 }
                                 arrayList.add(new blood(name, department, phoneNo, profile, blood));
+                                bloodAdapter recyclerAdapter=new bloodAdapter(arrayList);
+                                recyle.setAdapter(recyclerAdapter);
+                                recyle.setLayoutManager(new LinearLayoutManager(getContext()));
                             }
                         }
                         catch (JSONException e)

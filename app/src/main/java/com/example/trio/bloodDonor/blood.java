@@ -8,6 +8,7 @@ public class blood{
     private String bloodgroup;
 
     public String getProfile() {
+
         return profile;
     }
 
