@@ -19,9 +19,11 @@ public class bloodFilter extends Filter {
         if(constraint!=null && constraint.length()>0){
             constraint=constraint.toString().toUpperCase();
             ArrayList<blood> filteredModels=new ArrayList<>();
-            for(int i=0;i<filterList.size();i++){
-                if(filterList.get(i).getBloodgroup().toUpperCase().contains(constraint)){
-                    filteredModels.add(filterList.get(i));
+            for (blood item : filterList) {
+                if (item.getBloodgroup().toUpperCase().contains(constraint) ||
+                        item.getName().toUpperCase().contains(constraint) ||
+                        item.getDepartment().toUpperCase().contains(constraint)) {
+                    filteredModels.add(item);
                 }
             }
             results.count=filteredModels.size();
@@ -36,6 +38,7 @@ public class bloodFilter extends Filter {
 
     @Override
     protected void publishResults(CharSequence constraint, FilterResults results) {
-            bloodAdapter.arrayList=(ArrayList<blood>)results.values;
+        adapter.arrayList=(ArrayList<blood>)results.values;
+        adapter.notifyDataSetChanged();
     }
 }

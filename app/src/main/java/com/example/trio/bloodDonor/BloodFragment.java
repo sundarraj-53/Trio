@@ -67,12 +67,14 @@ public class BloodFragment extends Fragment {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getContext(), "ADD", Toast.LENGTH_SHORT).show();
                 stub.setVisibility(View.VISIBLE);
             }
         });
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 filterview.setVisibility(View.VISIBLE);
             }
         });
@@ -88,7 +90,6 @@ public class BloodFragment extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
                     adapter.getFilter().filter(s);
-                    loadBloodDonor();
 
                 }
                 catch (Exception e){

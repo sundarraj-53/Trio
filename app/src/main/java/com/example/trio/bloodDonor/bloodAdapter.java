@@ -20,15 +20,14 @@ import java.util.ArrayList;
 public class bloodAdapter extends RecyclerView.Adapter<bloodAdapter.ViewHolder> implements Filterable {
     public static ArrayList<blood> arrayList;
     public static ArrayList<blood> filterList;
-    Context context;
-    private static bloodFilter blood;
+    public Context context;
+    private bloodFilter blood;
     public bloodAdapter(ArrayList<blood> arrayList, ArrayList<blood> filterList, Context context) {
         this.arrayList = arrayList;
         this.filterList = filterList;
         this.context = context;
     }
-
-    public bloodAdapter(ArrayList<blood> arrayList) {
+    public bloodAdapter(ArrayList<blood> arrayList){
         this.arrayList=arrayList;
     }
 
@@ -69,7 +68,7 @@ public class bloodAdapter extends RecyclerView.Adapter<bloodAdapter.ViewHolder> 
         return blood;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+class ViewHolder extends RecyclerView.ViewHolder{
 
         ImageView profile;
         TextView blood_value,department_value,phoneNo_value,Name_value;
