@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -54,25 +55,13 @@ public class MainActivity extends AppCompatActivity {
                //end
                 if(!email.isEmpty() && !password.isEmpty()){
                     if(isValidEmail(email)){
-                        int year=Integer.parseInt(email.substring(0,2));
-                        int currentYear= Calendar.getInstance().get(Calendar.YEAR)%100;
-                        if(Math.abs(currentYear-year)>5){
-                            email_login.setError("Sorry user you are not eligible");
+                        try
+                        {
+                            postEmail(email,password);
                         }
-                        if(Math.abs(currentYear-year)<5){
-                            try {
-                                postEmail(email,password);
-                            } catch (JSONException e) {
+                        catch (JSONException e) {
                                 throw new RuntimeException(e);
                             }
-                        }
-                        else{
-                            try {
-                                postEmail(email,password);
-                            } catch (JSONException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
                     }
                     if(!isValidEmail(email)){
                         email_login.setError("Please Enter our college Email");
@@ -108,9 +97,17 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             String res=response.getString("status");
                             String token=response.getString("token");
+                            Log.d("NSS", String.valueOf(response));
+                            Toast.makeText(MainActivity.this, ""+response.getJSONObject("data").getInt("adminInClubCount")+" "+response.getJSONObject("data").getInt("committeeInClubCount"), Toast.LENGTH_SHORT).show();
+                            int count1=response.getJSONObject("data").getInt("adminInClubCount");
+                            int count2=response.getJSONObject("data").getInt("committeeInClubCount");
                             if(res.equals("success")){
+                                Intent intent=new Intent(MainActivity.this,home.class);
                                 store.saveUsername(token);
-                                startActivity(new Intent(MainActivity.this,home.class));
+                                intent.putExtra("role1",count1);
+                                intent.putExtra("role2",count2);
+                                startActivity(intent);
+//                                startActivity(new Intent(MainActivity.this,home.class));
                             }
                             if(res.equals("error")){
                                 password_login.setError(res);
@@ -118,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
                         } catch (Exception e) {
                             e.printStackTrace();
-                            Toast.makeText(MainActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Login Failed"+e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },

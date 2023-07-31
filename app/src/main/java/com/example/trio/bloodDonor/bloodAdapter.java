@@ -46,18 +46,18 @@ public class bloodAdapter extends RecyclerView.Adapter<bloodAdapter.ViewHolder> 
         holder.profile.setImageResource(Integer.parseInt(String.valueOf(ble.getProfile())));
         Log.d("SUNDAR",ble.getName());
         holder.Name_value.setText(ble.getName());
-//        Log.d("SUNDAR",ble.getDepartment());
-//        holder.department_value.setText(ble.getDepartment());
-//        Log.d("SUNDAR",ble.getBloodgroup());
-//        holder.blood_value.setText(ble.getBloodgroup());
-//        Log.d("SUNDAR",ble.getPhoneno());
-//        holder.phoneNo_value.setText(ble.getPhoneno());
+        Log.d("SUNDAR",ble.getDepartment());
+        holder.department_value.setText(ble.getDepartment());
+        Log.d("SUNDAR",ble.getBloodgroup());
+        holder.blood_value.setText(ble.getBloodgroup());
+        Log.d("SUNDAR",ble.getPhoneno());
+        holder.phoneNo_value.setText(ble.getPhoneno());
     }
 
     @Override
     public int getItemCount() {
 
-        return arrayList.size();
+        return arrayList != null ?arrayList.size():0;
     }
 
     @Override

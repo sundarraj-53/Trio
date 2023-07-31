@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    app:cardUseCompatPadding="true"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="5dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/userId"
+                android:visibility="gone"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/request_name"
+                android:text="Sundarraj"
+                android:textSize="28dp"
+                android:layout_marginTop="35dp"
+                android:fontFamily="@font/home"
+                android:layout_margin="15dp"
+                android:padding="5dp"
+                />
+            <Button
+                android:layout_width="130dp"
+                android:layout_height="40dp"
+                android:id="@+id/accept_request"
+                android:text="Accept"
+                android:layout_marginTop="15dp"
+                android:drawableLeft="@drawable/baseline_check_24"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/btn"
+                />
+
+            <Button
+                android:layout_width="130dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/accept_request"
+                android:text="Reject"
+                android:layout_margin="15dp"
+                android:layout_marginRight="15dp"
+                android:id="@+id/reject_request"
+                android:background="@drawable/btn"
+                android:drawableLeft="@drawable/baseline_clear_24"
+                />
+
+            <TextView
+                android:id="@+id/request_depart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/request_name"
+                android:layout_marginLeft="85dp"
+                android:text="IT"
+                android:textSize="30dp"
+                />
+        </RelativeLayout>
+</androidx.cardview.widget.CardView>
+

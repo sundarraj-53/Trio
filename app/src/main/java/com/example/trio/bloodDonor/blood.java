@@ -2,10 +2,12 @@ package com.example.trio.bloodDonor;
 
 public class blood{
     private String name;
+    private String profile;
     private String department;
     private String phoneno;
-    private String profile;
+
     private String bloodgroup;
+
 
     public String getProfile() {
 
@@ -15,6 +17,7 @@ public class blood{
     public void setProfile(String profile) {
         this.profile = profile;
     }
+
 
     public blood(String name, String department, String phoneno, String profile, String bloodgroup) {
         this.name = name;

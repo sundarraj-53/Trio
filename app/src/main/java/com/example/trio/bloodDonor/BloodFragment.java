@@ -38,44 +38,44 @@ import java.util.Map;
 
 
 public class BloodFragment extends Fragment {
-    ImageView add,filter;
+    ImageView filter;
     ViewStub stub;
     RecyclerView recyle;
     Storage store=new Storage();
     private ArrayList<blood> arrayList;
+    public String department,phoneNo,blood;
      ViewStub filterview;
+    public int count=0;
      EditText search;
      CheckBox dept,name;
-     private bloodAdapter adapter;
+     public bloodAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view=inflater.inflate(R.layout.fragment_blood, container, false);
         arrayList=new ArrayList<>();
-        add=view.findViewById(R.id.plusIcon);
-        stub=view.findViewById(R.id.dd_ml);
         filter=view.findViewById(R.id.filter);
         recyle=view.findViewById(R.id.recycle);
         filterview=view.findViewById(R.id.filter_view);
         dept=view.findViewById(R.id.department_filter);
         name=view.findViewById(R.id.name_filter);
         search=view.findViewById(R.id.searchEt);
-        add.setClickable(true);
         filter.setClickable(true);
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "ADD", Toast.LENGTH_SHORT).show();
-                stub.setVisibility(View.VISIBLE);
-            }
-        });
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(count%2==0) {
+                    filterview.setVisibility(View.VISIBLE);
+                    recyle.setVisibility(View.GONE);
 
-                filterview.setVisibility(View.VISIBLE);
+                }
+                else{
+                    filterview.setVisibility(View.GONE);
+                    recyle.setVisibility(View.VISIBLE);
+                }
+                count++;
             }
         });
         loadBloodDonor();
@@ -127,17 +127,18 @@ public class BloodFragment extends Fragment {
                                 String firstN =userObject.getString("firstName");
                                 String lastN = userObject.getString("lastName");
                                 String name = firstN + " " + lastN;
-                                String department = userObject.getString("department");
-                                String phoneNo = userObject.getString("phoneNo");
-                                String blood = userObject.getString("bloodGroup");
+                                department = userObject.getString("department");
+                                phoneNo = userObject.getString("phoneNo");
+                                blood = userObject.getString("bloodGroup");
                                 String profile = userObject.optString("image", "");
                                 if (profile.isEmpty()) {
                                     profile = String.valueOf(R.drawable.baseline_account_circle_24);
                                 }
                                 arrayList.add(new blood(name, department, phoneNo, profile, blood));
-                                bloodAdapter recyclerAdapter=new bloodAdapter(arrayList);
-                                recyle.setAdapter(recyclerAdapter);
-                                recyle.setLayoutManager(new LinearLayoutManager(getContext()));
+                                adapter=new bloodAdapter(arrayList);
+                                recyle.setAdapter(adapter);
+                                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+                                recyle.setLayoutManager(linearLayoutManager);
                             }
                         }
                         catch (JSONException e)

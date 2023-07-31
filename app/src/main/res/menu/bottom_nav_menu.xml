@@ -4,6 +4,11 @@
         android:icon="@drawable/home"
         android:iconTint="@color/black"
         />
+    <item android:id="@+id/request"
+          android:icon="@drawable/baseline_notifications_active_24"
+          android:iconTint="@color/black"
+          android:visible="false"
+        />
     <item android:id="@+id/blood_trio"
         android:icon="@drawable/blood"
         />

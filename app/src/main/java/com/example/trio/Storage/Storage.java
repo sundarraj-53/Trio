@@ -7,9 +7,14 @@ public class Storage
     private static final String KEY_THEME = "theme";
 
     public static void saveUsername(String username) {
+
         KEY_USERNAME=username;
     }
+    public static void deleteUsername(){
+        KEY_USERNAME="username";
+    }
     public static String getKeyUsername(){
+
         return KEY_USERNAME;
     }
 }
