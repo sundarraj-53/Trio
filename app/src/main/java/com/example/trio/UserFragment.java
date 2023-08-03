@@ -1,11 +1,8 @@
 package com.example.trio;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -22,14 +21,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.trio.Storage.Storage;
-import com.example.trio.bloodDonor.blood;
-import com.example.trio.bloodDonor.bloodAdapter;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,11 +32,17 @@ import java.util.Map;
 public class UserFragment extends Fragment {
 
 
-    TextView name,email,department,phoneno,signout;
+    TextView name,email,department,phoneno,signout,register;
     Button edit;
     Storage store=new Storage();
     public String Name,Phoneno,Department,Email,Profile;
     de.hdodenhof.circleimageview.CircleImageView profile;
+
+    private Context context;
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        context = requireContext();
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class UserFragment extends Fragment {
         phoneno=view.findViewById(R.id.profilephone);
         signout=view.findViewById(R.id.sign_out);
         edit=view.findViewById(R.id.edit_text);
+        register=view.findViewById(R.id.register);
         profile=view.findViewById(R.id.user_profile);
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +66,12 @@ public class UserFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(),Edit_profile.class));
+            }
+        });
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(),club_register.class));
             }
         });
         loadUserDetails();
@@ -83,16 +91,17 @@ public class UserFragment extends Fragment {
                         try {
                             response=response.getJSONObject("data").getJSONObject("user");
                             Log.d("ASHWIN", String.valueOf(response));
+                                store.saveId(response.getString("_id"));
                                 String firstN =response.getString("firstName");
                                 String lastN = response.getString("lastName");
                                 Name = firstN + " " + lastN;
                                 Department = response.getString("department");
                                 Phoneno = response.getString("phoneNo");
                                 Email=response.getString("email");
-                            name.setText(Name);
-                            department.setText(Department);
-                            email.setText(Email);
-                            phoneno.setText(Phoneno);
+                                name.setText(Name);
+                                department.setText(Department);
+                                email.setText(Email);
+                                phoneno.setText(Phoneno);
                         }
                         catch (JSONException e)
                         {
@@ -103,9 +112,7 @@ public class UserFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        if (getContext() != null) {
-                            Toast.makeText(getContext(), "Volley Error", Toast.LENGTH_SHORT).show();
-                        }
+                        Toast.makeText(context, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 })
         {

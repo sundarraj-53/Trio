@@ -39,7 +39,6 @@
             android:textColor="#7C7979"
             android:textColorLink="#00B0F8"
             android:textSize="20dp" />
-
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/user_profile"
             android:layout_width="match_parent"

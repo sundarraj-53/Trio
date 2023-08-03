@@ -1,11 +1,6 @@
 package com.example.trio.bloodDonor;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -13,10 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -38,17 +38,16 @@ import java.util.Map;
 
 
 public class BloodFragment extends Fragment {
-    ImageView filter;
-    ViewStub stub;
+    Spinner filter;
     RecyclerView recyle;
     Storage store=new Storage();
     private ArrayList<blood> arrayList;
     public String department,phoneNo,blood;
      ViewStub filterview;
-    public int count=0;
      EditText search;
      CheckBox dept,name;
      public bloodAdapter adapter;
+      String[] Filter={"","NAME","DEPARTMENT"};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,26 +57,12 @@ public class BloodFragment extends Fragment {
         arrayList=new ArrayList<>();
         filter=view.findViewById(R.id.filter);
         recyle=view.findViewById(R.id.recycle);
-        filterview=view.findViewById(R.id.filter_view);
+//        filterview=view.findViewById(R.id.filter_view);
         dept=view.findViewById(R.id.department_filter);
         name=view.findViewById(R.id.name_filter);
         search=view.findViewById(R.id.searchEt);
-        filter.setClickable(true);
-        filter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(count%2==0) {
-                    filterview.setVisibility(View.VISIBLE);
-                    recyle.setVisibility(View.GONE);
-
-                }
-                else{
-                    filterview.setVisibility(View.GONE);
-                    recyle.setVisibility(View.VISIBLE);
-                }
-                count++;
-            }
-        });
+        ArrayAdapter<String> adt = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, Filter);
+        filter.setAdapter(adt);
         loadBloodDonor();
 
         search.addTextChangedListener(new TextWatcher() {

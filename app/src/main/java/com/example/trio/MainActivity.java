@@ -1,15 +1,16 @@
 package com.example.trio;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -25,7 +26,6 @@ import com.example.trio.signUp.register_email;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,12 +34,14 @@ public class MainActivity extends AppCompatActivity {
     TextView login_title,account_login;
     EditText email_login,password_login;
     Button Login;
+    private ProgressBar PB;
     Storage store=new Storage();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         login_title=findViewById(R.id.title_login);
+        PB=findViewById(R.id.idPBLoading);
         account_login=findViewById(R.id.createaccount_login);
         email_login=findViewById(R.id.email_login);
         password_login=findViewById(R.id.password_login);
@@ -47,11 +49,13 @@ public class MainActivity extends AppCompatActivity {
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Login.setClickable(false);
                 String email=email_login.getText().toString();
                 String password=password_login.getText().toString();
-              //Working Purpose
-//                startActivity(new Intent(MainActivity.this, home.class));
-
+                PB.setVisibility(View.VISIBLE);
+                //Working Purpose
+                startActivity(new Intent(MainActivity.this, home.class));
+                Login.setClickable(true);
                //end
                 if(!email.isEmpty() && !password.isEmpty()){
                     if(isValidEmail(email)){
@@ -85,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void postEmail(String email,String password) throws JSONException{
-        String url="http://10.11.6.27:3000/api/v1/users/login";
+        String url="http://10.11.6.27:3000/api/v1/auth/login";
         JSONObject json=new JSONObject();
         json.put("email",email);
         json.put("password",password);
@@ -103,7 +107,9 @@ public class MainActivity extends AppCompatActivity {
                             int count2=response.getJSONObject("data").getInt("committeeInClubCount");
                             if(res.equals("success")){
                                 Intent intent=new Intent(MainActivity.this,home.class);
+
                                 store.saveUsername(token);
+                                Toast.makeText(MainActivity.this, "Hii"+store.getKeyUsername(), Toast.LENGTH_SHORT).show();
                                 intent.putExtra("role1",count1);
                                 intent.putExtra("role2",count2);
                                 startActivity(intent);
@@ -112,7 +118,9 @@ public class MainActivity extends AppCompatActivity {
                             if(res.equals("error")){
                                 password_login.setError(res);
                             }
-
+                            if(res.equals("redirect")){
+                                startActivity(new Intent(MainActivity.this,register.class));
+                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                             Toast.makeText(MainActivity.this, "Login Failed"+e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -132,7 +140,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+        Login.setClickable(true);
         queue.add(request);
+
     }
     private boolean isValidEmail(String email) {
         String emailRegex = "^[a-z0-9+_.-]+@nec\\.edu\\.in$";

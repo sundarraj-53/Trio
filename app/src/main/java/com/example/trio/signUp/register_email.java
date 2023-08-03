@@ -95,7 +95,7 @@ public class register_email extends AppCompatActivity{
     }
 
     private void postEmail(String email,String Student) throws JSONException {
-        String url="http://10.11.6.27:3000/api/v1/users/signupemail";
+        String url="http://10.11.6.27:3000/api/v1/auth/signupemail";
         JSONObject json=new JSONObject();
         json.put("email",email);
         RequestQueue queue= Volley.newRequestQueue(register_email.this);

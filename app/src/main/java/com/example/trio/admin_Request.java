@@ -1,9 +1,10 @@
 package com.example.trio;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -36,34 +37,47 @@ public class admin_Request extends Fragment {
     RecyclerView recyclerView;
     TextView name,id;
     Storage store=new Storage();
-    public String Name,dept,userid;
-    public ArrayList<request> arrayList;
+    private Context mContext;
+    public String Name,dept,club;
+    int clubid;
+    String userid;
+    String userId;
+    boolean status;
+    int clubId;
+    public ArrayList<request> arrayList= new ArrayList<>();;
     Button accept,reject;
+    TextView clubName;
+    private static RequestQueue requestQueue;
 
+    public void setContext(Context context) {
+        mContext = context;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v=inflater.inflate(R.layout.fragment_admin__request, container, false);
         recyclerView=v.findViewById(R.id.recycle);
-        arrayList=new ArrayList<>();
+        clubName=v.findViewById(R.id.club_name);
         name=v.findViewById(R.id.request_name);
         accept=v.findViewById(R.id.accept_request);
         reject=v.findViewById(R.id.reject_request);
         id=v.findViewById(R.id.userId);
-        loadData();
+        loadData(getContext());
         return v;
     }
-    private void loadData() {
-        String url="http://10.11.6.27:3000/api/v1/users/request";
+    public void loadData(Context context) {
+        String url="http://10.11.6.27:3000/api/v1/clubs/request";
         JSONObject json=new JSONObject();
-        RequestQueue queue= Volley.newRequestQueue(getContext());
+        RequestQueue queue=Volley.newRequestQueue(context.getApplicationContext());
         JsonObjectRequest request=new JsonObjectRequest(Request.Method.GET, url,json,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d("SANTHA", String.valueOf(response));
-                        Toast.makeText(getContext(), ""+response, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getContext(), ""+response, Toast.LENGTH_SHORT).show();
                         try {
+                            Log.d("SUNDAR", String.valueOf(response));
+                            arrayList.clear();
                             JSONArray dataObject = response.getJSONObject("data").getJSONArray("users");
                             int j=response.getInt("result");
                             for (int i=0; i <j; i++) {
@@ -73,10 +87,18 @@ public class admin_Request extends Fragment {
                                 Name=first+" "+last;
                                 dept=userObject.getString("department");
                                 userid=userObject.getString("userId");
-                                arrayList.add(new request(getContext(),Name,dept,userid));
-                                adminAdapter Admin=new adminAdapter(arrayList);
-                                recyclerView.setAdapter(Admin);
+                                club=userObject.getString("clubName");
+//                                userid=Long.parseLong(user);
+                                clubid=userObject.getInt("clubId");
+                                arrayList.add(new request(Name,dept,userid,clubid,club));
+                                if (recyclerView != null) {
+                                    adminAdapter Admin = new adminAdapter(getContext(), arrayList);
+                                    recyclerView.setAdapter(Admin);
+                                } else {
+                                    Log.e("ERROR", "RecyclerView is null.");
+                                }
                             }
+
                         }
                         catch (JSONException e)
                         {
@@ -102,7 +124,66 @@ public class admin_Request extends Fragment {
                 return headers;
             }
         };
-
         queue.add(request);
+    }
+//    public void getValue(String dept_id,boolean b,int clubid) throws JSONException {
+//        userId=dept_id;
+//        status=b;
+//        clubId=clubid;
+//
+//        sendValue(getContext(),userId,status,clubId);
+//        loadData(getContext());
+//    }
+
+    public void sendValue(Context context, String dept_id, boolean b, int club_id) throws JSONException {
+        Log.d("ASHWIN", String.valueOf(context));
+        String url="http://10.11.6.27:3000/api/v1/clubs/request/"+dept_id+"/"+club_id;
+        JSONObject json=new JSONObject();
+        RequestQueue queue=Volley.newRequestQueue(context);
+        json.put("approvalStatus",b);
+
+        JsonObjectRequest request=new JsonObjectRequest(Request.Method.POST, url,json,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Log.d("RESPONSE",response.getString("status"));
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                        try {
+                            if(response.getString("status").equals("success")){
+                                Log.d("status",response.getString("status"));
+                            }
+                            else{
+                                Log.d("status",response.getString("status"));
+                            }
+                        }
+                        catch (JSONException e)
+                        {
+                            Log.d("RESPONSE",e.getMessage());
+                            throw new RuntimeException(e);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (getContext() != null) {
+                            Toast.makeText(getContext(), "Volley Error", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                String token=store.getKeyUsername();
+                headers.put("Authorization","Bearer " + token);
+                return headers;
+            }
+        };
+        queue.add(request);
+        startActivity(new Intent(getContext(),admin_Request.class));
     }
 }

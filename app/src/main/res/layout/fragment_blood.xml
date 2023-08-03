@@ -25,41 +25,44 @@
         android:textStyle="bold"
         />
     <EditText
-        android:layout_width="300dp"
+        android:layout_width="260dp"
         android:layout_height="50dp"
         android:layout_marginTop="13dp"
         android:background="@drawable/custom"
         android:padding="15dp"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="5dp"
         android:layout_below="@+id/blood_donor_title"
         android:id="@+id/searchEt"
         android:hint="Search"
         android:drawableLeft="@drawable/baseline_search_24"
         />
-    <ImageView
+
+    <Spinner
+        android:id="@+id/filter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/blood_donor_title"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="18dp"
-        android:layout_marginRight="15dp"
-        android:id="@+id/filter"
+        android:layout_marginTop="22dp"
+        android:padding="10dp"
+        android:visibility="gone"
+        android:layout_marginRight="-5dp"
         android:clickable="true"
-        android:src="@drawable/baseline_filter_list_24" />
-    <ViewStub
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/filter_view"
-        android:layout_below="@+id/filter"
-        android:layout="@layout/filter_splash"
         />
 
+<!--    <ViewStub-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/filter_view"-->
+<!--        android:layout_below="@+id/filter"-->
+<!--        android:layout="@layout/filter_splash"-->
+<!--        />-->
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/filter_view"
+            android:layout_below="@+id/searchEt"
             android:id="@+id/recycle"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="55dp"
             android:layout_centerHorizontal="true"
             tools:listitem="@layout/blood_list"
             />

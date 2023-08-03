@@ -24,14 +24,25 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/request_name"
-                android:text="Sundarraj"
-                android:textSize="28dp"
-                android:layout_marginTop="35dp"
-                android:fontFamily="@font/home"
-                android:layout_margin="15dp"
-                android:padding="5dp"
+                android:text="CLub"
+                android:textSize="25dp"
+                android:id="@+id/club_name"
+                android:layout_marginLeft="70dp"
+               android:layout_below="@+id/request_name"
                 />
+
+            <TextView
+                android:id="@+id/request_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/home"
+                android:padding="5dp"
+                android:text="Sundarraj"
+                android:textSize="28dp" />
             <Button
                 android:layout_width="130dp"
                 android:layout_height="40dp"
@@ -43,7 +54,6 @@
                 android:layout_marginRight="15dp"
                 android:background="@drawable/btn"
                 />
-
             <Button
                 android:layout_width="130dp"
                 android:layout_height="40dp"
@@ -61,7 +71,7 @@
                 android:id="@+id/request_depart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/request_name"
+                android:layout_below="@+id/club_name"
                 android:layout_marginLeft="85dp"
                 android:text="IT"
                 android:textSize="30dp"

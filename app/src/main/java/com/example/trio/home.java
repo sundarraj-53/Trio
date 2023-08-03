@@ -1,10 +1,10 @@
 package com.example.trio;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.trio.bloodDonor.BloodFragment;
 import com.example.trio.databinding.ActivityHomeBinding;
@@ -19,9 +19,11 @@ public class home extends AppCompatActivity {
     admin_Request re=new admin_Request();
     BloodFragment blood=new BloodFragment();
     UserFragment user=new UserFragment();
+    newPost post=new newPost();
     private static int HOME_TRIO_ID= R.id.home_trio;
     private static int REQUEST_TRIO_ID= R.id.request;
     private static int BLOOD_TRIO_ID = R.id.blood_trio;
+    private static int NEW_POST_ID=R.id.post;
     private static int USER_TRIO_ID = R.id.user_trio;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +36,11 @@ public class home extends AppCompatActivity {
         int role2=getIntent().getIntExtra("role2",0);
         if(role!=0 || role2!=0){
             bottomNavigationView.getMenu().findItem(R.id.request).setVisible(true);
+            bottomNavigationView.getMenu().findItem(R.id.post).setVisible(true);
         }
         else{
             bottomNavigationView.getMenu().findItem(R.id.request).setVisible(false);
+//            bottomNavigationView.getMenu().findItem(R.id.post).setVisible(false);
         }
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -47,6 +51,10 @@ public class home extends AppCompatActivity {
                 }
                 if(item.getItemId()==REQUEST_TRIO_ID){
                     getSupportFragmentManager().beginTransaction().replace(R.id.container,re).commit();
+                    return true;
+                }
+                if(item.getItemId()==NEW_POST_ID){
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container,post).commit();
                     return true;
                 }
                 if (item.getItemId() == USER_TRIO_ID) {

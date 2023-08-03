@@ -19,11 +19,9 @@ public class bloodFilter extends Filter {
         if(constraint!=null && constraint.length()>0){
             constraint=constraint.toString().toUpperCase();
             ArrayList<blood> filteredModels=new ArrayList<>();
-            for (blood item : filterList) {
-                if (item.getBloodgroup().toUpperCase().contains(constraint) ||
-                        item.getName().toUpperCase().contains(constraint) ||
-                        item.getDepartment().toUpperCase().contains(constraint)) {
-                    filteredModels.add(item);
+            for(int i=0;i<filterList.size();i++){
+                if(filterList.get(i).getBloodgroup().toUpperCase().contains(constraint) || filterList.get(i).getName().toUpperCase().contains(constraint)||filterList.get(i).getDepartment().toUpperCase().contains(constraint)){
+                    filteredModels.add(filterList.get(i));
                 }
             }
             results.count=filteredModels.size();

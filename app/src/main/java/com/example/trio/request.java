@@ -1,15 +1,33 @@
 package com.example.trio;
 
-import android.content.Context;
-
 public class request {
     public String name,department;
     public String dept_id;
+    public int id;
 
-    public request(Context context, String name, String department, String dept_id) {
+    public String getClub() {
+        return club;
+    }
+
+    public void setClub(String club) {
+        this.club = club;
+    }
+
+    public String club;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    public request(String name, String department, String dept_id,int id,String club) {
         this.name = name;
         this.department = department;
         this.dept_id = dept_id;
+        this.id=id;
+        this.club=club;
     }
 
     public String getName() {
@@ -37,6 +55,7 @@ public class request {
     }
 
     public void setDept_id(String dept_id) {
+
         this.dept_id = dept_id;
     }
 
