@@ -100,7 +100,8 @@ public class Edit_profile extends AppCompatActivity {
     }
     private void postMethod(String firstName,String lastName,String department,String phoneNo) throws JSONException
     {
-        String url="http://10.11.6.27:3000/api/v1/users/user/updateDetail";
+//        String url="http://10.11.6.27:3000/api/v1/users/user/updateDetail";
+        String url="https://ecapp.onrender.com/api/v1/users/user/updateDetail";
         RequestQueue queue= Volley.newRequestQueue(Edit_profile.this);
         JSONObject userDetails =new JSONObject();
         userDetails.put("firstName",firstName);
@@ -151,7 +152,8 @@ public class Edit_profile extends AppCompatActivity {
     }
     private void loadUserDetails()
     {
-        String url="http://10.11.6.27:3000/api/v1/users/user";
+//        String url="http://10.11.6.27:3000/api/v1/users/user";
+        String url="https://ecapp.onrender.com/api/v1/users/user";
         JSONObject json=new JSONObject();
         RequestQueue queue= Volley.newRequestQueue(Edit_profile.this);
         ArrayList subt=new ArrayList();

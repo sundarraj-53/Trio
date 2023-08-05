@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +19,7 @@ public class clubAdapter extends RecyclerView.Adapter<clubAdapter.ViewHolder>{
     Storage store=new Storage();
     club_register club_register=new club_register();
     public clubAdapter( ArrayList<club> arrayList) {
+
         this.arrayList=arrayList;
     }
 
@@ -32,8 +34,8 @@ public class clubAdapter extends RecyclerView.Adapter<clubAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         club cl=arrayList.get(position);
-        holder.check.setId(cl.getId());
         holder.check.setText(cl.getClubName());
+        holder.check.setChecked(cl.isChecked());
 
     }
 
@@ -47,6 +49,16 @@ public class clubAdapter extends RecyclerView.Adapter<clubAdapter.ViewHolder>{
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             check=itemView.findViewById(R.id.check);
+            check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    int position = getBindingAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        club club = arrayList.get(position);
+                        club.setChecked(isChecked);
+                    }
+                }
+            });
         }
     }
 }

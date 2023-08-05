@@ -37,6 +37,7 @@ public class club_register extends AppCompatActivity {
     Storage store=new Storage();
     CheckBox check;
     ArrayList<Integer> request_club;
+    Integer[] array;
     RecyclerView recyclerView;
     club club=new club();
     ArrayList<club> arrayList;
@@ -46,7 +47,7 @@ public class club_register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_club_register);
         register=findViewById(R.id.button);
-        request_club=new ArrayList<>();
+        request_club= new ArrayList<>();
         back=findViewById(R.id.backbtn);
         arrayList=new ArrayList<club>();
         check=new CheckBox(this);
@@ -65,6 +66,7 @@ public class club_register extends AppCompatActivity {
                 int id=check.getId();
                 if(isChecked){
                     request_club.add(id);
+                    Log.d("CHECK", String.valueOf(id));
                 }
                 else{
                     request_club.remove(id);
@@ -76,12 +78,8 @@ public class club_register extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    Log.d("AJAY", String.valueOf(request_club));
-                    Toast.makeText(club_register.this, ""+request_club, Toast.LENGTH_SHORT).show();
-//                    clubData();
-                    if(request_club.size()>2) {
-                        sendClubData(request_club);
-                    }
+                    getCheckedClubIds();
+                   sendClubData(request_club);
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
@@ -89,11 +87,17 @@ public class club_register extends AppCompatActivity {
         });
     }
     private void sendClubData(ArrayList<Integer> club) throws JSONException {
-
-            String url = "http://10.11.6.27:3000/api/v1/clubs/club";
-             JSONObject json = new JSONObject();
-        Toast.makeText(club_register.this, ""+club, Toast.LENGTH_LONG).show();
-        json.put("clubs",club);
+        int array[]=new int[club.size()];
+//        String url = "http://10.11.6.27:3000/api/v1/clubs/club";
+        String url ="https://ecapp.onrender.com/api/v1/clubs/club";
+        JSONObject json = new JSONObject();
+        JSONArray uson=new JSONArray();
+        for(int i=0;i<club.size();i++){
+            int id=club.get(i);
+            uson.put(id);
+        }
+        Toast.makeText(club_register.this, "club"+club, Toast.LENGTH_LONG).show();
+        json.put("clubs",uson);
         Toast.makeText(club_register.this, ""+club, Toast.LENGTH_SHORT).show();
         RequestQueue queue = Volley.newRequestQueue(club_register.this);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.PATCH, url, json,
@@ -102,22 +106,27 @@ public class club_register extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             Toast.makeText(club_register.this, "response" + response, Toast.LENGTH_SHORT).show();
-                            String res=response.getString("response");
+                            String res=response.getString("status");
+                            Log.d("response",res);
                             if(res.equals("success")){
-                                startActivity(new Intent(club_register.this,UserFragment.class));
+                                Toast.makeText(club_register.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
+//                                onBackPressed();
                             }
                         }  catch (JSONException e)
                         {
+                            e.printStackTrace();
                             throw new RuntimeException(e);
                         }
                     }
+
                 },
+
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         NetworkResponse networkResponse = error.networkResponse;
                         if (networkResponse != null && networkResponse.statusCode == 300) {
-                            startActivity(new Intent(club_register.this, com.example.trio.signUp.register.class));
+                           onBackPressed();
 
                         }
                         else{
@@ -137,9 +146,18 @@ public class club_register extends AppCompatActivity {
 
         queue.add(request);
     }
-
+    private void getCheckedClubIds() {
+        int i=0;
+        for (club clubs : arrayList) {
+            if (clubs.isChecked()) {
+                request_club.add(clubs.getId());
+                i++;
+            }
+        }
+    }
     private void loadClubData() {
-        String url = "http://10.11.6.27:3000/api/v1/clubs/club";
+//        String url = "http://10.11.6.27:3000/api/v1/clubs/club";
+        String url = "https://ecapp.onrender.com/api/v1/clubs/club";
         JSONObject json = new JSONObject();
         RequestQueue queue = Volley.newRequestQueue(club_register.this);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, json,
@@ -154,16 +172,14 @@ public class club_register extends AppCompatActivity {
                             for (int i = 0; i < j; i++) {
                                 JSONObject userObject = dataObject.getJSONObject(i);
                                 Log.d("RAJ", String.valueOf(userObject));
-                                int id_value=userObject.getInt("clubId");
-                                Log.d("AJAY", String.valueOf(id_value));
-//                                check.setId(club.getId());
-//                                check.setId(id_value);
-
+                                int id = userObject.getInt("clubId");
                                 String clubName=userObject.getString("clubName");
-                                arrayList.add(new club(clubName,id_value));
+                                arrayList.add(new club(clubName,id));
                                 clubAdapter adapter=new clubAdapter(arrayList);
                                 recyclerView.setAdapter(adapter);
                             }
+
+
                         }
                         catch (JSONException e)
                         {

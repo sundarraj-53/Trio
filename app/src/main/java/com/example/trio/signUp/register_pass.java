@@ -1,7 +1,5 @@
 package com.example.trio.signUp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -71,7 +71,8 @@ public class register_pass extends AppCompatActivity {
     }
 
     private void postEmailPassword(String email, int password,String Student) throws JSONException {
-        String url="http://10.11.6.27:3000/api/v1/auth/signuppassword";
+//        String url="http://10.11.6.27:3000/api/v1/auth/signuppassword";
+        String url="https://ecapp.onrender.com/api/v1/auth/signuppassword";
         RequestQueue queue= Volley.newRequestQueue(register_pass.this);
         JSONObject json=new JSONObject();
         json.put("email",email);

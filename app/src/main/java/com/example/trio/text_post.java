@@ -1,13 +1,15 @@
 package com.example.trio;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,7 +31,9 @@ import java.util.Map;
 public class text_post extends AppCompatActivity {
 
     EditText text_msg, captions, tag;
+    Spinner clubs;
     CheckBox check;
+    int selectedId;
     boolean mode = false;
     Storage store = new Storage();
     ImageButton img,back;
@@ -41,9 +45,13 @@ public class text_post extends AppCompatActivity {
         text_msg = findViewById(R.id.text_edit);
         captions = findViewById(R.id.captions_edit);
         tag = findViewById(R.id.text_tag);
+        clubs=findViewById(R.id.spinner_adt);
         back=findViewById(R.id.back);
         check = findViewById(R.id.radio);
         img = findViewById(R.id.tick);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(text_post.this, android.R.layout.simple_spinner_item, store.getArrayList());
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        clubs.setAdapter(adapter);
         check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -52,6 +60,17 @@ public class text_post extends AppCompatActivity {
                 } else {
                     mode = false;
                 }
+            }
+        });
+        clubs.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedId=store.club_name.get(position);
+                Toast.makeText(text_post.this, "Hii"+selectedId, Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
         back.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +90,7 @@ public class text_post extends AppCompatActivity {
                 Log.d("tags",tags);
                 if (text != null) {
                     try {
-                        sendData(text, Captions, tags, mode);
+                        sendData(text, Captions,selectedId, tags, mode);
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -80,13 +99,14 @@ public class text_post extends AppCompatActivity {
         });
     }
 
-    private void sendData(String text, String Captions, String tags, boolean mode) throws JSONException {
-        String url = "http://10.11.6.27:3000/api/v1/posts/postDetail";
+    private void sendData(String text, String Captions, int selectedId, String tags, boolean mode) throws JSONException {
+//        String url = "http://10.11.6.27:3000/api/v1/posts/postDetail";
+        String url="https://ecapp.onrender.com/api/v1/posts/postDetail";
         JSONObject json = new JSONObject();
         json.put("text", text);
         json.put("format","text");
         json.put("caption", Captions);
-        json.put("club",2);
+        json.put("club",selectedId);
         json.put("tags", tags);
         json.put("modes", mode);
         Toast.makeText(text_post.this, "Hii"+store.getKeyUsername(), Toast.LENGTH_SHORT).show();
@@ -97,7 +117,8 @@ public class text_post extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             if(response.getString("status").equals("Success")){
-                                startActivity(new Intent(text_post.this,UserFragment.class));
+                                Toast.makeText(text_post.this, "Send successfully", Toast.LENGTH_SHORT).show();
+                                onBackPressed();
                             }
                         } catch (JSONException e) {
                             throw new RuntimeException(e);

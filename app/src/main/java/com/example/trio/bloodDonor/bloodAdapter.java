@@ -27,7 +27,11 @@ public class bloodAdapter extends RecyclerView.Adapter<bloodAdapter.ViewHolder> 
         this.filterList = filterList;
         this.context = context;
     }
+
+//    public bloodAdapter(ArrayList<com.example.trio.bloodDonor.blood> arrayList) {
+//    }
     public bloodAdapter(ArrayList<blood> arrayList){
+
         this.arrayList=arrayList;
     }
 

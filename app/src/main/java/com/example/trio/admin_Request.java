@@ -3,10 +3,6 @@ package com.example.trio;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -47,6 +46,7 @@ public class admin_Request extends Fragment {
     public ArrayList<request> arrayList= new ArrayList<>();;
     Button accept,reject;
     TextView clubName;
+    TextView clubSelection;
     private static RequestQueue requestQueue;
 
     public void setContext(Context context) {
@@ -61,12 +61,24 @@ public class admin_Request extends Fragment {
         name=v.findViewById(R.id.request_name);
         accept=v.findViewById(R.id.accept_request);
         reject=v.findViewById(R.id.reject_request);
+        clubSelection=v.findViewById(R.id.commitee_selection);
         id=v.findViewById(R.id.userId);
+        if(store.getRole()>0){
+            clubSelection.setVisibility(View.VISIBLE);
+        }
         loadData(getContext());
+        clubSelection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(v.getContext(),commitee_activity.class));
+            }
+        });
+
         return v;
     }
     public void loadData(Context context) {
-        String url="http://10.11.6.27:3000/api/v1/clubs/request";
+//        String url="http://10.11.6.27:3000/api/v1/clubs/request";
+        String url="https://ecapp.onrender.com/api/v1/clubs/request";
         JSONObject json=new JSONObject();
         RequestQueue queue=Volley.newRequestQueue(context.getApplicationContext());
         JsonObjectRequest request=new JsonObjectRequest(Request.Method.GET, url,json,
@@ -137,7 +149,9 @@ public class admin_Request extends Fragment {
 
     public void sendValue(Context context, String dept_id, boolean b, int club_id) throws JSONException {
         Log.d("ASHWIN", String.valueOf(context));
-        String url="http://10.11.6.27:3000/api/v1/clubs/request/"+dept_id+"/"+club_id;
+//        String url="http://10.11.6.27:3000/api/v1/clubs/request/"+dept_id+"/"+club_id;
+
+        String url="https://ecapp.onrender.com/api/v1/clubs/request/"+dept_id+"/"+club_id;
         JSONObject json=new JSONObject();
         RequestQueue queue=Volley.newRequestQueue(context);
         json.put("approvalStatus",b);
@@ -184,6 +198,5 @@ public class admin_Request extends Fragment {
             }
         };
         queue.add(request);
-        startActivity(new Intent(getContext(),admin_Request.class));
     }
 }

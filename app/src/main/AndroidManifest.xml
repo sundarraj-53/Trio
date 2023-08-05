@@ -18,6 +18,15 @@
         android:theme="@style/Theme.Trio"
         tools:targetApi="31">
         <activity
+            android:name=".commitee_activity"
+            android:exported="false" />
+        <activity
+            android:name=".comment_activity"
+            android:exported="false" />
+        <activity
+            android:name=".main_Admin"
+            android:exported="false" />
+        <activity
             android:name=".text_post"
             android:exported="false" />
         <activity

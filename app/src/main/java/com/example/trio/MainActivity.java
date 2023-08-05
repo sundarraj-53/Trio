@@ -22,7 +22,9 @@ import com.android.volley.toolbox.Volley;
 import com.example.trio.Storage.Storage;
 import com.example.trio.signUp.register;
 import com.example.trio.signUp.register_email;
+import com.google.gson.Gson;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView login_title,account_login;
     EditText email_login,password_login;
+    Storage storage=new Storage();
     Button Login;
     private ProgressBar PB;
     Storage store=new Storage();
@@ -54,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 String password=password_login.getText().toString();
                 PB.setVisibility(View.VISIBLE);
                 //Working Purpose
-                startActivity(new Intent(MainActivity.this, home.class));
+//                startActivity(new Intent(MainActivity.this, home.class));
                 Login.setClickable(true);
                //end
                 if(!email.isEmpty() && !password.isEmpty()){
@@ -89,7 +92,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void postEmail(String email,String password) throws JSONException{
-        String url="http://10.11.6.27:3000/api/v1/auth/login";
+//        String url="http://10.11.6.27:3000/api/v1/auth/login";
+        String url="https://ecapp.onrender.com/api/v1/auth/login";
         JSONObject json=new JSONObject();
         json.put("email",email);
         json.put("password",password);
@@ -102,13 +106,46 @@ public class MainActivity extends AppCompatActivity {
                             String res=response.getString("status");
                             String token=response.getString("token");
                             Log.d("NSS", String.valueOf(response));
+
+                            JSONArray adminClubName=response.getJSONObject("data").getJSONArray("adminInClub");
+                            JSONArray membersClubName=response.getJSONObject("data").getJSONArray("memberInClub");
+                            store.arrayList.add(" ");
+                            store.club_name.add(0);
+                            for (int i = 0; i < adminClubName.length(); i++) {
+                                JSONObject clubObject = adminClubName.getJSONObject(i);
+                                Log.d("CLUBS", String.valueOf(clubObject));
+                                int clubId=clubObject.getInt("clubId");
+                                String clubName = clubObject.getString("clubName");
+                                Log.d("CLUBS", clubId+" "+clubName);
+                                store.club_name.add(clubId);
+                                store.arrayList.add(clubName);
+                            }
+                            store.member_club.add(" ");
+                            store.club_no.add(0);
+                            for (int i = 0; i < membersClubName.length(); i++) {
+                                JSONObject clubObject = membersClubName.getJSONObject(i);
+                                Log.d("CLUBS", String.valueOf(clubObject));
+                                int clubId=clubObject.getInt("clubId");
+                                String clubName = clubObject.getString("clubName");
+                                Log.d("MEMBER CLUBS", clubId+" "+clubName);
+                                store.club_no.add(clubId);
+                                store.member_club.add(clubName);
+                            }
+                            Toast.makeText(MainActivity.this, "MEMBER IN CLUB"+store.member_club, Toast.LENGTH_SHORT).show();
                             Toast.makeText(MainActivity.this, ""+response.getJSONObject("data").getInt("adminInClubCount")+" "+response.getJSONObject("data").getInt("committeeInClubCount"), Toast.LENGTH_SHORT).show();
                             int count1=response.getJSONObject("data").getInt("adminInClubCount");
                             int count2=response.getJSONObject("data").getInt("committeeInClubCount");
+                            String user_id=response.getJSONObject("data").getJSONObject("user").getString("_id");
+                            String fname=response.getJSONObject("data").getJSONObject("user").getString("firstName");
+                            String lname=response.getJSONObject("data").getJSONObject("user").getString("lastName");
+                            String user=fname+" "+lname;
+                            Log.d("NSS",user_id);
+                            Gson gson = new Gson();
                             if(res.equals("success")){
                                 Intent intent=new Intent(MainActivity.this,home.class);
-
                                 store.saveUsername(token);
+                                store.saveId(user_id);
+                                store.saveName(user);
                                 Toast.makeText(MainActivity.this, "Hii"+store.getKeyUsername(), Toast.LENGTH_SHORT).show();
                                 intent.putExtra("role1",count1);
                                 intent.putExtra("role2",count2);
@@ -133,7 +170,6 @@ public class MainActivity extends AppCompatActivity {
                         NetworkResponse networkResponse = error.networkResponse;
                         if (networkResponse != null && networkResponse.statusCode == 300) {
                             startActivity(new Intent(MainActivity.this, register.class));
-
                         }
                         else{
                             Toast.makeText(MainActivity.this, "Volley Error", Toast.LENGTH_SHORT).show();

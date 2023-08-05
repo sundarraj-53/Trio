@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ public class UserFragment extends Fragment {
     TextView name,email,department,phoneno,signout,register;
     Button edit;
     Storage store=new Storage();
+    private ProgressBar PB;
     public String Name,Phoneno,Department,Email,Profile;
     de.hdodenhof.circleimageview.CircleImageView profile;
 
@@ -48,6 +50,7 @@ public class UserFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_user, container, false);
         name=view.findViewById(R.id.profileName);
+        PB=view.findViewById(R.id.idPBLoading);
         email=view.findViewById(R.id.profileEmail);
         department=view.findViewById(R.id.profiledepartment);
         phoneno=view.findViewById(R.id.profilephone);
@@ -55,6 +58,7 @@ public class UserFragment extends Fragment {
         edit=view.findViewById(R.id.edit_text);
         register=view.findViewById(R.id.register);
         profile=view.findViewById(R.id.user_profile);
+        PB.setVisibility(View.VISIBLE);
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,14 +83,15 @@ public class UserFragment extends Fragment {
     }
 
     private void loadUserDetails() {
-        String url="http://10.11.6.27:3000/api/v1/users/user";
+//        String url="http://10.11.6.27:3000/api/v1/users/user";
+        String url="https://ecapp.onrender.com/api/v1/users/user";
         JSONObject json=new JSONObject();
         RequestQueue queue= Volley.newRequestQueue(getContext());
         JsonObjectRequest request=new JsonObjectRequest(Request.Method.GET, url,json,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-
+                        PB.setVisibility(View.GONE);
 
                         try {
                             response=response.getJSONObject("data").getJSONObject("user");
@@ -112,6 +117,7 @@ public class UserFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        PB.setVisibility(View.GONE);
                         Toast.makeText(context, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 })
