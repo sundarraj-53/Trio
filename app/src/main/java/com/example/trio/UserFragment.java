@@ -59,6 +59,9 @@ public class UserFragment extends Fragment {
         register=view.findViewById(R.id.register);
         profile=view.findViewById(R.id.user_profile);
         PB.setVisibility(View.VISIBLE);
+        if(store.getAdmin().equals("true")){
+            register.setVisibility(View.GONE);
+        }
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

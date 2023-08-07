@@ -10,10 +10,10 @@
           android:visible="false"
         />
     <item android:id="@+id/post"
-        android:icon="@drawable/baseline_add_circle_outline_24"
+        android:icon="@drawable/baseline_co_present_24"
         android:iconTint="@color/black"
         android:title=""
-        android:visible="true"
+        android:visible="false"
         />
     <item android:id="@+id/blood_trio"
         android:icon="@drawable/blood"

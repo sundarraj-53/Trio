@@ -24,7 +24,7 @@
             android:name=".comment_activity"
             android:exported="false" />
         <activity
-            android:name=".main_Admin"
+            android:name=".post"
             android:exported="false" />
         <activity
             android:name=".text_post"

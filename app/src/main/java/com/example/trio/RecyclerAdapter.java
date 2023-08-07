@@ -9,12 +9,14 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.material.card.MaterialCardView;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
@@ -43,6 +45,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Trio trio=arrayList.get(position);
+        final boolean[] isLiked = {false};
         if(trio.getFormat().equals("image")){
             holder.poster.setVisibility(View.VISIBLE);
             holder.text_value.setVisibility(View.GONE);
@@ -54,6 +57,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             holder.Club_name.setText(trio.getClubName());
             holder.tag.setText(trio.getTag());
             holder.like.setText(String.valueOf(trio.getLike()));
+            Glide.with(context)
+                    .load(trio.getClubimage())
+                    .into(holder.circleImageView);
         }
         else{
                 holder.text_value.setVisibility(View.VISIBLE);
@@ -64,7 +70,40 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 holder.Club_name.setText(trio.getClubName());
                 holder.tag.setText(trio.getTag());
                 holder.like.setText(String.valueOf(trio.getLike()));
+                Glide.with(context)
+                    .load(trio.getClubimage())
+                    .into(holder.circleImageView);
         }
+        holder.heart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isLiked[0] = !isLiked[0];
+                if (isLiked[0]) {
+                    holder.heart.setImageResource(R.drawable.baseline_favorite_24);
+                    int count= Integer.parseInt(trio.getLike());
+                    ++count;
+                    trio.setLike(String.valueOf(count));
+                    holder.like.setText(String.valueOf(count));
+                    try {
+                        trio_home.sendLikeData(context,trio.getId(),true);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    holder.heart.setImageResource(R.drawable.baseline_favorite_border_24);
+                    int count= Integer.parseInt(trio.getLike());
+                    --count;
+                    trio.setLike(String.valueOf(count));
+                    holder.like.setText(String.valueOf(count));
+                    Toast.makeText(context, ""+isLiked, Toast.LENGTH_SHORT).show();
+                    try {
+                        trio_home.sendLikeData(context,trio.getId(),false);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
         holder.cmnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,9 +128,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView poster;
-        MaterialCardView view;
+        de.hdodenhof.circleimageview.CircleImageView circleImageView;
         TextView text;
-        ImageButton cmnd;
+        ImageButton cmnd,heart;
         TextView captions,Club_name,like,tag,text_value;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -102,7 +141,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             cmnd=itemView.findViewById(R.id.comment);
             text_value=itemView.findViewById(R.id.text);
             tag=itemView.findViewById(R.id.tag);
-            view=itemView.findViewById(R.id.material);
+            heart=itemView.findViewById(R.id.like);
+            circleImageView=itemView.findViewById(R.id.idCVAuthor);
         }
     }
 }

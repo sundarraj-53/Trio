@@ -4,7 +4,35 @@ import java.util.ArrayList;
 
 public class Storage
 {
-    private static final String PREF_NODE_NAME = "com.example.myapp";
+
+    public static ArrayList<String> clubNames=new ArrayList<>();
+    public static ArrayList<Integer> clubIDNames=new ArrayList<>();
+    public static String MainAdmin;
+
+    public void clubAdd(){
+        clubNames.add("Select Your club");
+        clubNames.add("NSS");
+        clubNames.add("NCC");
+        clubNames.add("YRC");
+        clubNames.add("Yoga");
+        clubNames.add("Linux");
+        clubNames.add("Fine Arts");
+        clubNames.add("Eco");
+    }
+    public void clubIdAdd(){
+        clubIDNames.add(0);
+        clubIDNames.add(1);
+        clubIDNames.add(2);
+        clubIDNames.add(3);
+        clubIDNames.add(4);
+        clubIDNames.add(5);
+        clubIDNames.add(6);
+        clubIDNames.add(7);
+    }
+    public String getAdmin(){
+        return MainAdmin;
+    }
+
     public static String KEY_USERNAME = "username";
     public static int role=0;
     public static ArrayList<String> arrayList=new ArrayList<>();
@@ -40,9 +68,12 @@ public class Storage
     }
     public static void deleteUsername(){
         arrayList.clear();
+        clubNames.clear();
+        clubIDNames.clear();
         club_name.clear();
         member_club.clear();
         club_no.clear();
+        MainAdmin=" ";
         user_id="user_id";
         username=" ";
         KEY_USERNAME=" ";
@@ -64,6 +95,9 @@ public class Storage
     public ArrayList<String> getMember(){
 
         return member_club;
+    }
+    public ArrayList<String> getHomeFilter(){
+        return clubNames;
     }
 
 }

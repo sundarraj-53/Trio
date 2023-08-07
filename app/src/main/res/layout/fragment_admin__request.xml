@@ -23,11 +23,26 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/no_request"
+        android:text="No request"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:fontFamily="@font/home"
+        android:visibility="gone"
+        android:textSize="28dp"
+        android:layout_margin="15dp"
+        android:layout_marginLeft="5dp"
+        android:textStyle="bold"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/commitee_selection"
-        android:text="Commitee Selection"
+        android:text="@string/Commitee"
+        android:layout_marginRight="10dp"
         android:layout_below="@+id/request_dash"
         android:layout_alignParentRight="true"
-        android:textSize="18dp"
+        android:textSize="21dp"
         android:visibility="gone"
         />
     <androidx.recyclerview.widget.RecyclerView

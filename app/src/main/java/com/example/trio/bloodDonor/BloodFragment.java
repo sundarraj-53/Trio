@@ -46,6 +46,7 @@ public class BloodFragment extends Fragment {
      ViewStub filterview;
      EditText search;
      CheckBox dept,name;
+     String BloodGroup="";
      public bloodAdapter adapter;
       String[] Filter={"","NAME","DEPARTMENT"};
 
@@ -74,8 +75,9 @@ public class BloodFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
-                    adapter.getFilter().filter(s);
-
+//                    adapter.getFilter().filter(s);
+                    String searchText = s.toString();
+                    makeServerRequest(searchText,BloodGroup);
                 }
                 catch (Exception e){
                   e.printStackTrace();
@@ -89,6 +91,68 @@ public class BloodFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    private void makeServerRequest(String searchText,String BloodGroup) {
+        String url="http://10.11.6.27:3000/api/v1/users/donor?firstName="+searchText+"&bloodGroup="+BloodGroup;
+        JSONObject json=new JSONObject();
+        RequestQueue queue= Volley.newRequestQueue(getContext());
+        JsonObjectRequest request=new JsonObjectRequest(Request.Method.GET, url,json,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+//                        Toast.makeText(getContext(), "Hii "+response, Toast.LENGTH_SHORT).show();
+
+                        try {
+                            JSONArray dataObject = response.getJSONObject("data").getJSONArray("user");
+                            int j=response.getInt("result");
+                            Log.d("SUNDAR", String.valueOf(dataObject));
+                            adapter = new bloodAdapter(arrayList);
+                            recyle.setAdapter(adapter);
+                            LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
+                            recyle.setLayoutManager(linearLayoutManager);
+                            for (int i=0; i <j; i++) {
+                                JSONObject userObject = dataObject.getJSONObject(i);
+                                Log.d("SUNDAR", String.valueOf(userObject));
+                                String firstN =userObject.getString("firstName");
+                                String lastN = userObject.getString("lastName");
+                                String name = firstN + " " + lastN;
+                                department = userObject.getString("department");
+                                phoneNo = userObject.getString("phoneNo");
+                                blood = userObject.getString("bloodGroup");
+                                String profile = userObject.optString("image", "");
+                                if (profile.isEmpty()) {
+                                    profile = String.valueOf(R.drawable.baseline_account_circle_24);
+                                }
+                                arrayList.add(new blood(name, department, phoneNo, profile, blood));
+                            }
+                            adapter.notifyDataSetChanged();
+                        }
+                        catch (JSONException e)
+                        {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (getContext() != null) {
+                            Toast.makeText(getContext(), "Volley Error", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                String token=store.getKeyUsername();
+                headers.put("Authorization","Bearer " + token);
+                return headers;
+            }
+        };
+
+        queue.add(request);
     }
 
     private void loadBloodDonor() {

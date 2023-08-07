@@ -11,8 +11,6 @@ public class bloodFilter extends Filter {
         this.filterList = filterList;
         this.adapter = adapter;
     }
-
-
     @Override
     protected FilterResults performFiltering(CharSequence constraint) {
         FilterResults results=new FilterResults();

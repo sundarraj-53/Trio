@@ -153,6 +153,18 @@
                             android:textSize="18dp"
                             android:layout_marginLeft="80dp"
                             android:padding="5dp"
+                            />
+                        <Spinner
+                            android:layout_width="150dp"
+                            android:layout_height="35dp"
+                            android:background="@drawable/course"
+                            android:layout_below="@+id/radio1"
+                            android:layout_alignParentLeft="true"
+                            android:id="@+id/spinner_adt"
+                            android:layout_marginTop="25dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginLeft="30dp"
                             android:layout_marginBottom="150dp"
                             />
                     </RelativeLayout>

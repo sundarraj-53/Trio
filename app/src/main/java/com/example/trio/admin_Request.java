@@ -35,6 +35,7 @@ public class admin_Request extends Fragment {
 
     RecyclerView recyclerView;
     TextView name,id;
+    TextView center;
     Storage store=new Storage();
     private Context mContext;
     public String Name,dept,club;
@@ -61,6 +62,7 @@ public class admin_Request extends Fragment {
         name=v.findViewById(R.id.request_name);
         accept=v.findViewById(R.id.accept_request);
         reject=v.findViewById(R.id.reject_request);
+        center=v.findViewById(R.id.no_request);
         clubSelection=v.findViewById(R.id.commitee_selection);
         id=v.findViewById(R.id.userId);
         if(store.getRole()>0){
@@ -92,23 +94,28 @@ public class admin_Request extends Fragment {
                             arrayList.clear();
                             JSONArray dataObject = response.getJSONObject("data").getJSONArray("users");
                             int j=response.getInt("result");
-                            for (int i=0; i <j; i++) {
-                                JSONObject userObject = dataObject.getJSONObject(i);
-                                String first=userObject.getString("firstName");
-                                String last=userObject.getString("lastName");
-                                Name=first+" "+last;
-                                dept=userObject.getString("department");
-                                userid=userObject.getString("userId");
-                                club=userObject.getString("clubName");
-//                                userid=Long.parseLong(user);
-                                clubid=userObject.getInt("clubId");
-                                arrayList.add(new request(Name,dept,userid,clubid,club));
-                                if (recyclerView != null) {
-                                    adminAdapter Admin = new adminAdapter(getContext(), arrayList);
-                                    recyclerView.setAdapter(Admin);
-                                } else {
-                                    Log.e("ERROR", "RecyclerView is null.");
+                            if(j>0){
+                                for (int i=0; i <j; i++) {
+                                    JSONObject userObject = dataObject.getJSONObject(i);
+                                    String first = userObject.getString("firstName");
+                                    String last = userObject.getString("lastName");
+                                    Name = first + " " + last;
+                                    dept = userObject.getString("department");
+                                    userid = userObject.getString("userId");
+                                    club = userObject.getString("clubName");
+                                    //                                userid=Long.parseLong(user);
+                                    clubid = userObject.getInt("clubId");
+                                    arrayList.add(new request(Name, dept, userid, clubid, club));
+                                    if (recyclerView != null) {
+                                        adminAdapter Admin = new adminAdapter(getContext(), arrayList);
+                                        recyclerView.setAdapter(Admin);
+                                    } else {
+                                        Log.e("ERROR", "RecyclerView is null.");
+                                    }
                                 }
+                            }
+                            else{
+                                center.setVisibility(View.VISIBLE);
                             }
 
                         }

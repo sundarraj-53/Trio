@@ -24,6 +24,9 @@ public class commentsBoxAdapter extends RecyclerView.Adapter<commentsBoxAdapter.
     public commentsBoxAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater= LayoutInflater.from(parent.getContext());
         View view=inflater.inflate(R.layout.comment_list,parent,false);
+        RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        view.setLayoutParams(layoutParams);
         return new commentsBoxAdapter.ViewHolder(view);
     }
 

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    app:cardUseCompatPadding="true"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="2dp"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/home"
+            android:text="Name"
+            android:textSize="23dp" />
+        <TextView
+            android:id="@+id/user_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="77dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/home"
+            android:text="Sundarraj M"
+            android:textSize="23dp" />
+
+        <TextView
+            android:id="@+id/user_dept_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/user_name"
+            android:text="Department"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/home"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/user_dept"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/user_edit"
+            android:layout_marginLeft="127dp"
+            android:layout_marginTop="15dp"
+            android:text="Blood value"
+            android:fontFamily="@font/home"
+            android:textSize="20dp" />
+        <Spinner
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/custom"
+            android:padding="8dp"
+            android:id="@+id/clubSelection"
+            android:layout_marginTop="20dp"
+            />
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/user_dept"
+            android:layout_marginTop="25dp"
+            android:text="Accept"
+            android:id="@+id/accept"
+            />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

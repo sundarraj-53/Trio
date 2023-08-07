@@ -1,18 +1,36 @@
 package com.example.trio;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 
 public class Trio {
-    private String profileIcon;
     private String postImage;
     private String tag;
     private String captions;
 
+    public Trio(JSONArray array) {
+        comment=array;
+
+    }
+
+    public String getClubimage() {
+        return clubimage;
+    }
+
+    public void setClubimage(String clubimage) {
+        this.clubimage = clubimage;
+    }
+
+    private String  clubimage;
+
     public JSONArray getComment() {
+        Log.d("JOHN",comment.toString());
         return comment;
     }
 
     public void setComment(JSONArray comment) {
+        Log.d("JOHN",comment.toString());
         this.comment = comment;
     }
 
@@ -26,7 +44,9 @@ public class Trio {
 //        this.like = like;
 //
 //    }
-
+//     public void addComment(String newComment) {
+//        commentArray.put(newComment);
+//    }
     private String clubName;
     private String like;
     private String text;
@@ -59,7 +79,7 @@ public class Trio {
     }
 
     private String id;
-    public Trio(String id, String format, String image, String tag, String caption, String clubName, String like, String text, JSONArray comment) {
+    public Trio(String id, String format, String image, String tag, String caption, String clubName, String like, String text, JSONArray comment, String clubimage) {
         this.format=format;
         this.text=text;
         this.postImage = image;
@@ -70,6 +90,7 @@ public class Trio {
         this.isLiked = false;
         this.id=id;
         this.comment=comment;
+        this.clubimage=clubimage;
     }
 
     public String getTag() {
@@ -93,14 +114,6 @@ public class Trio {
 //        this.like = like;
 //    }
 
-    public String getProfileIcon() {
-        return profileIcon;
-    }
-
-    public void setProfileIcon(String profileIcon) {
-
-        this.profileIcon = profileIcon;
-    }
 
     public String getPostImage() {
 

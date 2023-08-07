@@ -1,55 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Trio_Home">
-    <include layout="@layout/post"
-        android:visibility="gone"/>
+    <include
+        android:id="@+id/postLayout"
+        layout="@layout/post"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/selectionadmin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:background="#00FFFFFF"
+        android:visibility="gone"
+        android:src="@drawable/new_post"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/home_title"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/noPost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Post Yet Posted"
+        android:textSize="25sp"
+        android:fontFamily="@font/home"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:id="@+id/home_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"
         android:fontFamily="@font/home"
         android:text="Home"
-        android:textSize="28dp"
+        android:textSize="28sp"
         android:textStyle="bold"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.037"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Spinner
+        android:id="@+id/spinner_adt"
         android:layout_width="150dp"
         android:layout_height="35dp"
-        android:background="@drawable/custom"
-        android:layout_marginTop="55dp"
-        android:layout_alignParentRight="true"
-        android:id="@+id/spinner_adt"
-        android:layout_marginRight="15dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="30dp"
-        />
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/spinner_adt"
         android:layout_marginTop="30dp"
-        >
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
-            >
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:id="@+id/reycler_view"
-                android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/post" />
-        </RelativeLayout>
-    </ScrollView>
+        android:background="@drawable/custom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_title" />
 
-</RelativeLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/reycler_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_adt"
+        app:layout_constraintVertical_bias="0.0"
+        tools:listitem="@layout/post"
+        android:layout_marginTop="15dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

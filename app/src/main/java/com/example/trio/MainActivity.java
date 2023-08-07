@@ -105,14 +105,31 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             String res=response.getString("status");
                             String token=response.getString("token");
-                            Log.d("NSS", String.valueOf(response));
-
+                            int count1=response.getJSONObject("data").getInt("adminInClubCount");
+                            int count2=response.getJSONObject("data").getInt("committeeInClubCount");
+                            String user_id=response.getJSONObject("data").getJSONObject("user").getString("_id");
+                            String fname=response.getJSONObject("data").getJSONObject("user").getString("firstName");
+                            String lname=response.getJSONObject("data").getJSONObject("user").getString("lastName");
+                            String user=fname+" "+lname;
+                            Log.d("MAINADMIN", String.valueOf(response));
+                            String name= String.valueOf(response.getJSONObject("data").getJSONObject("user").optBoolean("admin"));
+                            store.MainAdmin=name;
                             JSONArray adminClubName=response.getJSONObject("data").getJSONArray("adminInClub");
+                            JSONArray commiteeClubName=response.getJSONObject("data").getJSONArray("committeeInClub");
                             JSONArray membersClubName=response.getJSONObject("data").getJSONArray("memberInClub");
                             store.arrayList.add(" ");
                             store.club_name.add(0);
                             for (int i = 0; i < adminClubName.length(); i++) {
                                 JSONObject clubObject = adminClubName.getJSONObject(i);
+                                Log.d("CLUBS", String.valueOf(clubObject));
+                                int clubId=clubObject.getInt("clubId");
+                                String clubName = clubObject.getString("clubName");
+                                Log.d("CLUBS", clubId+" "+clubName);
+                                store.club_name.add(clubId);
+                                store.arrayList.add(clubName);
+                            }
+                            for (int i = 0; i < commiteeClubName.length(); i++) {
+                                JSONObject clubObject = commiteeClubName.getJSONObject(i);
                                 Log.d("CLUBS", String.valueOf(clubObject));
                                 int clubId=clubObject.getInt("clubId");
                                 String clubName = clubObject.getString("clubName");
@@ -131,26 +148,25 @@ public class MainActivity extends AppCompatActivity {
                                 store.club_no.add(clubId);
                                 store.member_club.add(clubName);
                             }
-                            Toast.makeText(MainActivity.this, "MEMBER IN CLUB"+store.member_club, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "COMMITEE IN CLUB"+store.club_name+" "+ store.arrayList, Toast.LENGTH_SHORT).show();
                             Toast.makeText(MainActivity.this, ""+response.getJSONObject("data").getInt("adminInClubCount")+" "+response.getJSONObject("data").getInt("committeeInClubCount"), Toast.LENGTH_SHORT).show();
-                            int count1=response.getJSONObject("data").getInt("adminInClubCount");
-                            int count2=response.getJSONObject("data").getInt("committeeInClubCount");
-                            String user_id=response.getJSONObject("data").getJSONObject("user").getString("_id");
-                            String fname=response.getJSONObject("data").getJSONObject("user").getString("firstName");
-                            String lname=response.getJSONObject("data").getJSONObject("user").getString("lastName");
-                            String user=fname+" "+lname;
+
                             Log.d("NSS",user_id);
                             Gson gson = new Gson();
+                            PB.setVisibility(View.GONE);
                             if(res.equals("success")){
                                 Intent intent=new Intent(MainActivity.this,home.class);
                                 store.saveUsername(token);
+                                store.clubAdd();
+                                store.clubIdAdd();
                                 store.saveId(user_id);
                                 store.saveName(user);
+                                int count=count1+count2;
+                                store.saveRole(count);
                                 Toast.makeText(MainActivity.this, "Hii"+store.getKeyUsername(), Toast.LENGTH_SHORT).show();
                                 intent.putExtra("role1",count1);
                                 intent.putExtra("role2",count2);
                                 startActivity(intent);
-//                                startActivity(new Intent(MainActivity.this,home.class));
                             }
                             if(res.equals("error")){
                                 password_login.setError(res);
@@ -159,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(new Intent(MainActivity.this,register.class));
                             }
                         } catch (Exception e) {
+                            PB.setVisibility(View.GONE);
                             e.printStackTrace();
                             Toast.makeText(MainActivity.this, "Login Failed"+e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
@@ -167,11 +184,13 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        PB.setVisibility(View.GONE);
                         NetworkResponse networkResponse = error.networkResponse;
                         if (networkResponse != null && networkResponse.statusCode == 300) {
                             startActivity(new Intent(MainActivity.this, register.class));
                         }
                         else{
+
                             Toast.makeText(MainActivity.this, "Volley Error", Toast.LENGTH_SHORT).show();
                         }
                     }

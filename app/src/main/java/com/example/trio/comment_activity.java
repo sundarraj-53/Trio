@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
@@ -35,10 +36,13 @@ public class comment_activity extends AppCompatActivity {
     EditText edit;
     Storage store=new Storage();
     Button post;
+    commentsBoxAdapter commentsBoxAdapter;
     String jsonArray;
     ImageButton cancel;
     ArrayList<comment> comments;
     TextView center;
+
+    JSONArray array;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +54,24 @@ public class comment_activity extends AppCompatActivity {
         comments=new ArrayList<>();
         cancel=findViewById(R.id.back);
         center=findViewById(R.id.comment_center);
+        commentsBoxAdapter = new commentsBoxAdapter(comments);
+        recyclerView.setAdapter(commentsBoxAdapter);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setReverseLayout(true);
+        recyclerView.setLayoutManager(layoutManager);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
+        jsonArray=getIntent().getStringExtra("Comments");
+        try {
+            array=new JSONArray(jsonArray);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        ;
         try {
             loadData();
         } catch (JSONException e)
@@ -82,22 +98,33 @@ public class comment_activity extends AppCompatActivity {
     private void uploadComment(String comment) throws JSONException {
         String url="https://ecapp.onrender.com/api/v1/posts/comments";
         JSONObject jsonObject=new JSONObject();
-        jsonObject.put("_id",getIntent().getStringExtra("id"));
-        jsonObject.put("userId",store.getUser_id());
+        jsonObject.put("postId",getIntent().getStringExtra("id"));
         jsonObject.put("comment",comment);
-        jsonObject.put("userName",store.getName());
         RequestQueue queue= Volley.newRequestQueue(this);
+        Log.d("Comment", String.valueOf(jsonObject));
         JsonObjectRequest request=new JsonObjectRequest(Request.Method.POST, url, jsonObject,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Toast.makeText(comment_activity.this, "Hello", Toast.LENGTH_SHORT).show();
+                        Log.d("RESPONSE", String.valueOf(response));
                         try {
-                            if(response.getString("status").equals("Success")){
-                                String username=store.getName();
-                                comments.add(new comment(comment,username));
-                                commentsBoxAdapter commentsBoxAdapter = new commentsBoxAdapter(comments);
-                                recyclerView.setAdapter(commentsBoxAdapter);
+                            if(response.getString("status").equals("success")){
+                                String username = response.getJSONObject("data").getJSONObject("user").getString("userName"); // Handle missing userName
+                                String newComment = response.getJSONObject("data").getJSONObject("user").getString("comment");
+                                    comments.add(0, new comment(newComment, username));
+                                    center.setVisibility(View.GONE);
+                                Toast.makeText(comment_activity.this, "Hii"+array, Toast.LENGTH_SHORT).show();
+                                    JSONObject newCommentJson = new JSONObject();
+                                    newCommentJson.put("comment", newComment);
+                                    newCommentJson.put("userName", username);
+                                     array.put(newCommentJson);
+                                    Trio trio=new Trio(array);
+                                    Log.d("array",response.toString());
+                                    Log.d("newarray",array.toString());
+                                    commentsBoxAdapter.notifyDataSetChanged();
+                                    recyclerView.scrollToPosition(0);
+                                    edit.setText(" ");
                             }
                             else{
                                 Toast.makeText(comment_activity.this, "Comment Not Posted Successfully", Toast.LENGTH_SHORT).show();
@@ -122,12 +149,12 @@ public class comment_activity extends AppCompatActivity {
                 return headers;
             }
         };
+        queue.add(request);
 
     }
 
     private void loadData() throws JSONException {
-        jsonArray=getIntent().getStringExtra("Comments");
-        JSONArray array=new JSONArray(jsonArray);
+
         Log.d("ARRAY", String.valueOf(array.length()));
         if(array.length()>0) {
             for (int i = 0; i < array.length(); i++) {
@@ -138,9 +165,8 @@ public class comment_activity extends AppCompatActivity {
                 Log.d("ARRAY",username);
                 comments.add(new comment(comment,username));
                 Log.d("ARRAY", String.valueOf(comments));
-                commentsBoxAdapter commentsBoxAdapter = new commentsBoxAdapter(comments);
-                recyclerView.setAdapter(commentsBoxAdapter);
             }
+
         }
         else{
             center.setVisibility(View.VISIBLE);
