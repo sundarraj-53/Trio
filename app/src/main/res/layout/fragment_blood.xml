@@ -24,18 +24,40 @@
         android:layout_marginLeft="5dp"
         android:textStyle="bold"
         />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/NouserFound"
+        android:text="No Donors Found"
+        android:fontFamily="@font/home"
+        android:textSize="28dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        android:layout_margin="15dp"
+        android:layout_marginLeft="5dp"
+        android:textStyle="bold"
+        />
     <EditText
         android:layout_width="260dp"
         android:layout_height="50dp"
         android:layout_marginTop="13dp"
         android:background="@drawable/custom"
         android:padding="15dp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="15dp"
         android:layout_below="@+id/blood_donor_title"
         android:id="@+id/searchEt"
         android:hint="Search"
         android:drawableLeft="@drawable/baseline_search_24"
         />
+
+    <!--    <ViewStub-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/filter_view"-->
+<!--        android:layout_below="@+id/filter"-->
+<!--        android:layout="@layout/filter_splash"-->
+<!--        />-->
 
     <Spinner
         android:id="@+id/filter"
@@ -43,21 +65,15 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/blood_donor_title"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="22dp"
-        android:padding="10dp"
-        android:visibility="gone"
-        android:layout_marginRight="-5dp"
+        android:dropDownSelector="@drawable/baseline_arrow_drop_down_24"
+        android:textAlignment="textEnd"
+        android:layout_marginTop="75dp"
+        android:background="@drawable/new_spinner"
+        android:layout_marginRight="12dp"
         android:clickable="true"
-        />
+       />
 
-<!--    <ViewStub-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:id="@+id/filter_view"-->
-<!--        android:layout_below="@+id/filter"-->
-<!--        android:layout="@layout/filter_splash"-->
-<!--        />-->
-        <androidx.recyclerview.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/searchEt"

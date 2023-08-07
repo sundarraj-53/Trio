@@ -129,6 +129,7 @@ public class AdminWork extends Fragment {
                         try {
                             if(response.getString("status").equals("success")){
                                 Toast.makeText(context, "User Added  Successfully", Toast.LENGTH_SHORT).show();
+                                loadDetails();
                             }
                             else{
                                 Toast.makeText(context, "User Not added Successfully", Toast.LENGTH_SHORT).show();

@@ -23,10 +23,10 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:background="#00FFFFFF"
-        android:visibility="gone"
-        android:src="@drawable/new_post"
+        android:src="@drawable/icons"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.916"
         app:layout_constraintStart_toEndOf="@+id/home_title"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />

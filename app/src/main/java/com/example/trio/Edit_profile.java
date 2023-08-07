@@ -1,15 +1,23 @@
 package com.example.trio;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
@@ -20,6 +28,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.trio.Storage.Storage;
+import com.github.dhaval2404.imagepicker.ImagePicker;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,11 +41,15 @@ public class Edit_profile extends AppCompatActivity {
 
     EditText first, last, phoneno;
     Spinner department_r;
+    de.hdodenhof.circleimageview.CircleImageView circleImageView;
     public String Phoneno, Department;
     Button submit;
     Storage store = new Storage();
+    ImageButton newadd;
     TextView back;
     public int select=-1;
+    Uri uri;
+    String sImage;
     ArrayAdapter<String> adapter;
     String[] Dept = {"", "IT", "ECE", "EEE", "MECH", "CSE", "CIVIL"};
     @Override
@@ -48,7 +61,9 @@ public class Edit_profile extends AppCompatActivity {
         phoneno = findViewById(R.id.phoneNoEt);
         department_r = findViewById(R.id.DepartmentEt);
         submit = findViewById(R.id.editProfile);
+        newadd=findViewById(R.id.addicon);
         back=findViewById(R.id.back);
+        circleImageView=findViewById(R.id.user_profile);
         adapter=setAdapter();
         loadUserDetails();
         back.setOnClickListener(new View.OnClickListener() {
@@ -64,6 +79,26 @@ public class Edit_profile extends AppCompatActivity {
                 sendUserDetails();
             }
         });
+        newadd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImagePicker.Companion.with(Edit_profile.this)
+                        .crop()
+                        .maxResultSize(1380,1380)
+                        .start(101);
+            }
+        });
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==101 && resultCode== Activity.RESULT_OK){
+            uri=data.getData();
+            Context context=Edit_profile.this;
+            sImage=RealPathUtil.getRealPath(context,uri);
+            Bitmap bitmap= BitmapFactory.decodeFile(sImage);
+            circleImageView.setImageBitmap(bitmap);
+        }
     }
 
     private void sendUserDetails()

@@ -118,13 +118,13 @@ public class register_email extends AppCompatActivity{
                             else
                             {
                                 String e=response.getString("message");
-                                Toast.makeText(register_email.this, "Hello "+e, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(register_email.this, "You already used the email", Toast.LENGTH_SHORT).show();
                                 email_register.setError(e);
                             }
                         } catch (Exception e) {
                             Log.e("Hello", "JSONException: " + e.getMessage());
                             e.printStackTrace();
-                            Toast.makeText(register_email.this, "Login Failed",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(register_email.this, "Registeration Failed",Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -133,7 +133,7 @@ public class register_email extends AppCompatActivity{
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d("Hii", String.valueOf(error));
-                        Toast.makeText(register_email.this, "Volley Error "+error, Toast.LENGTH_LONG).show();
+                        Toast.makeText(register_email.this, "Failed to connect to server..!", Toast.LENGTH_LONG).show();
 
                     }
                 });

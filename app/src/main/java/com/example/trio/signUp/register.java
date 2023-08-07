@@ -152,7 +152,7 @@ public class register extends AppCompatActivity {
 
                 }
                 catch (JSONException e){
-                    Toast.makeText(register.this, "Method Exception Occured "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(register.this, "Error Occured due to "+e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         },
@@ -160,7 +160,7 @@ public class register extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                Toast.makeText(register.this, "Error Occured "+error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(register.this, "Failed to connect to server..!", Toast.LENGTH_SHORT).show();
             }
         });
         queue.add(request);

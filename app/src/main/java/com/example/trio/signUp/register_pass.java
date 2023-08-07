@@ -84,22 +84,20 @@ public class register_pass extends AppCompatActivity {
                             try {
                                  String res=response.getString("status");
                                  Log.d("Hii",res);
-                                Toast.makeText(register_pass.this, "Hii"+res, Toast.LENGTH_SHORT).show();
                                  if(res.equals("success")){
                                      Intent i=new Intent(register_pass.this, com.example.trio.signUp.register.class);
                                      i.putExtra("Email",email);
                                      i.putExtra("type",Student);
-                                   startActivity(i);
+                                     startActivity(i);
                                  }
                                  else{
                                      String e=response.getString("message");
-                                     Toast.makeText(register_pass.this, "Hello user "+e, Toast.LENGTH_SHORT).show();
                                      input4.setError("Password is wrong");
                                  }
                             }
                             catch (Exception e){
                                 Log.e(TAG,"Method Exception Occured "+e.getMessage());
-                                Toast.makeText(register_pass.this, "Error due to "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(register_pass.this, "Error Occured due to "+e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                     }
                 },
@@ -108,7 +106,7 @@ public class register_pass extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
                         Log.d("register_pass",error.toString());
-                        Toast.makeText(register_pass.this, "Error Occured "+error.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(register_pass.this, "Failed to connect to server..!", Toast.LENGTH_SHORT).show();
                     }
                 });
         queue.add(request);

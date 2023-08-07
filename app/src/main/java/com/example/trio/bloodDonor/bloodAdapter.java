@@ -5,21 +5,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.trio.R;
 
 import java.util.ArrayList;
 
-public class bloodAdapter extends RecyclerView.Adapter<bloodAdapter.ViewHolder> implements Filterable {
-    public static ArrayList<blood> arrayList;
-    public static ArrayList<blood> filterList;
+public class bloodAdapter extends RecyclerView.Adapter<bloodAdapter.ViewHolder>{
+   ArrayList<blood> arrayList;
+    private ArrayList<blood> filterList;
     public Context context;
     private bloodFilter blood;
     public bloodAdapter(ArrayList<blood> arrayList, ArrayList<blood> filterList, Context context) {
@@ -27,11 +26,7 @@ public class bloodAdapter extends RecyclerView.Adapter<bloodAdapter.ViewHolder> 
         this.filterList = filterList;
         this.context = context;
     }
-
-//    public bloodAdapter(ArrayList<com.example.trio.bloodDonor.blood> arrayList) {
-//    }
-    public bloodAdapter(ArrayList<blood> arrayList){
-
+    public bloodAdapter(ArrayList<com.example.trio.bloodDonor.blood> arrayList) {
         this.arrayList=arrayList;
     }
 
@@ -46,8 +41,9 @@ public class bloodAdapter extends RecyclerView.Adapter<bloodAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
          blood ble=arrayList.get(position);
-        Log.d("SUNDAR", String.valueOf(Integer.parseInt(String.valueOf(ble.getProfile()))));
-        holder.profile.setImageResource(Integer.parseInt(String.valueOf(ble.getProfile())));
+        Context context = holder.itemView.getContext();
+//        Log.d("SUNDAR", String.valueOf(Integer.parseInt(String.valueOf(ble.getProfile()))));
+//        holder.profile.setImageResource(Integer.parseInt(String.valueOf(ble.getProfile())));
         Log.d("SUNDAR",ble.getName());
         holder.Name_value.setText(ble.getName());
         Log.d("SUNDAR",ble.getDepartment());
@@ -56,6 +52,9 @@ public class bloodAdapter extends RecyclerView.Adapter<bloodAdapter.ViewHolder> 
         holder.blood_value.setText(ble.getBloodgroup());
         Log.d("SUNDAR",ble.getPhoneno());
         holder.phoneNo_value.setText(ble.getPhoneno());
+        Glide.with(context)
+                .load(ble.getProfile())
+                .into(holder.image);
     }
 
     @Override
@@ -64,16 +63,17 @@ public class bloodAdapter extends RecyclerView.Adapter<bloodAdapter.ViewHolder> 
         return arrayList != null ?arrayList.size():0;
     }
 
-    @Override
-    public Filter getFilter() {
-        if(blood==null){
-            blood=new bloodFilter(filterList,this);
-        }
-        return blood;
-    }
+//    @Override
+//    public Filter getFilter() {
+//        if(blood==null){
+//            blood=new bloodFilter(filterList,this);
+//        }
+//        return blood;
+//    }
 
 class ViewHolder extends RecyclerView.ViewHolder{
 
+    de.hdodenhof.circleimageview.CircleImageView image;
         ImageView profile;
         TextView blood_value,department_value,phoneNo_value,Name_value;
         public ViewHolder(@NonNull View itemView) {
@@ -82,7 +82,8 @@ class ViewHolder extends RecyclerView.ViewHolder{
             department_value=itemView.findViewById(R.id.department_value);
             phoneNo_value=itemView.findViewById(R.id.phoneno_value);
             Name_value=itemView.findViewById(R.id.donor_name);
-            profile=itemView.findViewById(R.id.user_profile);
+//            profile=itemView.findViewById(R.id.user_profile);
+            image=itemView.findViewById(R.id.user_profile);
         }
 
     }
