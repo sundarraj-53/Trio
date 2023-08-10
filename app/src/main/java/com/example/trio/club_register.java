@@ -105,14 +105,16 @@ public class club_register extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            Toast.makeText(club_register.this, "response" + response, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(club_register.this, "response" + response, Toast.LENGTH_SHORT).show();
                             String res=response.getString("status");
                             Log.d("response",res);
                             if(res.equals("success")){
                                 Toast.makeText(club_register.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
+
 //                                onBackPressed();
                             }
-                        }  catch (JSONException e)
+                        }
+                        catch (JSONException e)
                         {
                             e.printStackTrace();
                             throw new RuntimeException(e);
@@ -127,10 +129,9 @@ public class club_register extends AppCompatActivity {
                         NetworkResponse networkResponse = error.networkResponse;
                         if (networkResponse != null && networkResponse.statusCode == 300) {
                            onBackPressed();
-
                         }
                         else{
-                            Toast.makeText(club_register.this, "Volley Error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(club_register.this, "Failed to connect server..!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 })
@@ -178,8 +179,6 @@ public class club_register extends AppCompatActivity {
                                 clubAdapter adapter=new clubAdapter(arrayList);
                                 recyclerView.setAdapter(adapter);
                             }
-
-
                         }
                         catch (JSONException e)
                         {
@@ -196,7 +195,7 @@ public class club_register extends AppCompatActivity {
 
                         }
                         else{
-                            Toast.makeText(club_register.this, "Volley Error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(club_register.this, "Failed to connect server..!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 })

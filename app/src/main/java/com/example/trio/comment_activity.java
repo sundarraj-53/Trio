@@ -114,7 +114,7 @@ public class comment_activity extends AppCompatActivity {
                                 String newComment = response.getJSONObject("data").getJSONObject("user").getString("comment");
                                     comments.add(0, new comment(newComment, username));
                                     center.setVisibility(View.GONE);
-                                Toast.makeText(comment_activity.this, "Hii"+array, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(comment_activity.this, "Comment posted successfully", Toast.LENGTH_SHORT).show();
                                     JSONObject newCommentJson = new JSONObject();
                                     newCommentJson.put("comment", newComment);
                                     newCommentJson.put("userName", username);
@@ -138,7 +138,7 @@ public class comment_activity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(comment_activity.this, "Error Occured due to"+error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(comment_activity.this, "Failed to connect server..!", Toast.LENGTH_SHORT).show();
                     }
                 })
          {

@@ -106,7 +106,6 @@ public class image_post extends AppCompatActivity {
             public void onClick(View v) {
                 String caption=captions.getText().toString();
                 String tags=tag.getText().toString();
-                Toast.makeText(image_post.this, "HII+POST", Toast.LENGTH_SHORT).show();
                 if(!caption.isEmpty() && !tags.isEmpty() && selectedId!=0){
                     uploadImage(caption,tags,mode,"image",selectedId);
                 }
@@ -178,7 +177,7 @@ public class image_post extends AppCompatActivity {
                     Log.d("ANNAN", "HELLO");
                     Log.d("ANNAN",response.body().getMessage());
                     Log.d("ANNAN", response.body().toString());
-                    Toast.makeText(image_post.this, "Post Created Successfully", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(image_post.this, "Post Created Successfully", Toast.LENGTH_SHORT).show();
                 }
 
                 else{
@@ -189,7 +188,7 @@ public class image_post extends AppCompatActivity {
             @Override
             public void onFailure(Call<Example> call, Throwable t)  {
                 Log.d("RESPONSE",t.toString());
-                Toast.makeText(image_post.this, "Error Occured due to"+t.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(image_post.this, "Failed to connect server..!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -237,7 +236,7 @@ public class image_post extends AppCompatActivity {
             @Override
             public void onFailure(Call<Example> call, Throwable t) {
                 Log.d("RESPONSE",t.toString());
-                Toast.makeText(image_post.this, "Error Occured due to"+t.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(image_post.this, "Failed to connect server..!", Toast.LENGTH_SHORT).show();
             }
         });
     }

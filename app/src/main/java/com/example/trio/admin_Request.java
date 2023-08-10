@@ -65,7 +65,7 @@ public class admin_Request extends Fragment {
         center=v.findViewById(R.id.no_request);
         clubSelection=v.findViewById(R.id.commitee_selection);
         id=v.findViewById(R.id.userId);
-        if(store.getRole()>0){
+        if(store.getData()>0){
             clubSelection.setVisibility(View.VISIBLE);
         }
         loadData(getContext());
@@ -130,7 +130,7 @@ public class admin_Request extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         if (getContext() != null) {
-                            Toast.makeText(getContext(), "Volley Error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Failed to Connect Server...!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 })
@@ -191,7 +191,7 @@ public class admin_Request extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         if (getContext() != null) {
-                            Toast.makeText(getContext(), "Volley Error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Failed to connect server..!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 })

@@ -5,6 +5,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Multipart;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 
@@ -17,5 +18,10 @@ public interface ApiService {
     @POST("posts/postDetail")
     Call<Example> getOtherData(
             @Body  RequestBody requestBody
+    );
+    @Multipart
+    @PATCH("users/user/profileimage")
+    Call<Example> userImage(
+            @Part MultipartBody.Part image
     );
 }

@@ -18,6 +18,9 @@
         android:theme="@style/Theme.Trio"
         tools:targetApi="31">
         <activity
+            android:name=".forget_password"
+            android:exported="false" />
+        <activity
             android:name=".commitee_activity"
             android:exported="false" />
         <activity
@@ -37,6 +40,9 @@
             android:exported="false" />
         <activity
             android:name=".Edit_profile"
+            android:exported="false" />
+        <activity
+            android:name=".change_pass"
             android:exported="false" />
         <activity
             android:name=".home"

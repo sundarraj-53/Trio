@@ -114,6 +114,7 @@ public class Trio_Home extends Fragment {
 
     private void sendData(int selectedId) {
         String url="http://10.11.6.27:3000/api/v1/posts?clubId="+selectedId;
+//        String url="https://ecapp.onrender.com/api/v1/posts?clubId="+selectedId;
         Log.d("BOTTLE", String.valueOf(selectedId));
         JSONObject json=new JSONObject();
         RequestQueue queue= Volley.newRequestQueue(getContext());
@@ -259,7 +260,7 @@ public class Trio_Home extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         if (getContext() != null) {
-                            Toast.makeText(getContext(), "Volley Error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Failed to Connect Server..!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 })
@@ -303,7 +304,7 @@ public class Trio_Home extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(context, "Volley Error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Failed to Connect Server..!", Toast.LENGTH_SHORT).show();
                     }
                 })
         {

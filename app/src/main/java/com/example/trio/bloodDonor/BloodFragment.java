@@ -120,7 +120,8 @@ public class BloodFragment extends Fragment {
     }
 
     private void loadBloodData(String selected) {
-        String url="https://ecapp.onrender.com/api/v1/users/donor?firstName=&bloodGroup="+ Uri.encode(selected);;
+//        String url="https://ecapp.onrender.com/api/v1/users/donor?firstName=&bloodGroup="+ Uri.encode(selected);
+        String url="http://10.11.6.27:3000/api/v1/users/donor?firstName=&bloodGroup="+ Uri.encode(selected);;
         Log.d("loadBloodData","MAKE  SERVER");
         JSONObject json=new JSONObject();
         RequestQueue queue= Volley.newRequestQueue(getContext());
@@ -184,8 +185,8 @@ public class BloodFragment extends Fragment {
     }
 
     private void makeServerRequest(String searchText,String BloodGroup) {
-//        String url="http://10.11.6.27:3000/api/v1/users/donor?firstName="+searchText+"&bloodGroup="+BloodGroup;
-        String url="https://ecapp.onrender.com/api/v1/users/donor?firstName="+searchText+"&bloodGroup=";
+        String url="http://10.11.6.27:3000/api/v1/users/donor?firstName="+searchText+"&bloodGroup="+BloodGroup;
+//        String url="https://ecapp.onrender.com/api/v1/users/donor?firstName="+searchText+"&bloodGroup=";
         Log.d("Make Server","MAKE  SERVER");
         JSONObject json=new JSONObject();
         RequestQueue queue= Volley.newRequestQueue(getContext());
@@ -243,8 +244,8 @@ public class BloodFragment extends Fragment {
     }
 
     private void loadBloodDonor() {
-//        String url="http://10.11.6.27:3000/api/v1/users/donor?firstName=&department=&bloodGroup=";
-        String url="https://ecapp.onrender.com/api/v1/users/donor?firstName=&department=&bloodGroup=";
+        String url="http://10.11.6.27:3000/api/v1/users/donor?firstName=&department=&bloodGroup=";
+//        String url="https://ecapp.onrender.com/api/v1/users/donor?firstName=&department=&bloodGroup=";
         JSONObject json=new JSONObject();
         RequestQueue queue= Volley.newRequestQueue(getContext());
         JsonObjectRequest request=new JsonObjectRequest(Request.Method.GET, url,json,

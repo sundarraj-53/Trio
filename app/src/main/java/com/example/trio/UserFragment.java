@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.trio.Storage.Storage;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,8 +38,9 @@ public class UserFragment extends Fragment {
     Button edit;
     Storage store=new Storage();
     private ProgressBar PB;
-    public String Name,Phoneno,Department,Email,Profile;
+    public String Name,Phoneno,Department,Email;
     de.hdodenhof.circleimageview.CircleImageView profile;
+    TextView change;
 
     private Context context;
     public void onCreate(Bundle savedInstanceState) {
@@ -59,9 +61,16 @@ public class UserFragment extends Fragment {
         register=view.findViewById(R.id.register);
         profile=view.findViewById(R.id.user_profile);
         PB.setVisibility(View.VISIBLE);
-        if(store.getAdmin().equals("true")){
+        change=view.findViewById(R.id.change_pass);
+        if(store.getAdmin()!=null && store.getAdmin().equals("true")){
             register.setVisibility(View.GONE);
         }
+        change.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(),change_pass.class));
+            }
+        });
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,8 +95,8 @@ public class UserFragment extends Fragment {
     }
 
     private void loadUserDetails() {
-//        String url="http://10.11.6.27:3000/api/v1/users/user";
-        String url="https://ecapp.onrender.com/api/v1/users/user";
+        String url="http://10.11.6.27:3000/api/v1/users/user";
+//        String url="https://ecapp.onrender.com/api/v1/users/user";
         JSONObject json=new JSONObject();
         RequestQueue queue= Volley.newRequestQueue(getContext());
         JsonObjectRequest request=new JsonObjectRequest(Request.Method.GET, url,json,
@@ -102,6 +111,14 @@ public class UserFragment extends Fragment {
                                 store.saveId(response.getString("_id"));
                                 String firstN =response.getString("firstName");
                                 String lastN = response.getString("lastName");
+                                String photo=response.optString("profileLink","");
+                                photo= photo.replace("\\/", "/");
+                                Log.d("ASHWIN", photo);
+                                if(!photo.isEmpty()) {
+                                    Picasso.get()
+                                            .load(photo)
+                                            .into(profile);
+                                }
                                 Name = firstN + " " + lastN;
                                 Department = response.getString("department");
                                 Phoneno = response.getString("phoneNo");
@@ -121,7 +138,7 @@ public class UserFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         PB.setVisibility(View.GONE);
-                        Toast.makeText(context, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Failed to connect server..!", Toast.LENGTH_SHORT).show();
                     }
                 })
         {

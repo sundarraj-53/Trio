@@ -57,7 +57,6 @@ public class commitee_activity extends AppCompatActivity {
 //                int id_value=selectedClub.getId();
 //                Toast.makeText(commitee_activity.this, "ID_VALUE"+id_value, Toast.LENGTH_SHORT).show();
                    selectedId=store.club_name.get(position);
-                   Toast.makeText(commitee_activity.this, "Hii"+selectedId, Toast.LENGTH_SHORT).show();
 
 
             }
@@ -121,7 +120,7 @@ public class commitee_activity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        Toast.makeText(commitee_activity.this, "Failed to connect server..!", Toast.LENGTH_SHORT).show();
                     }
                 })
         {

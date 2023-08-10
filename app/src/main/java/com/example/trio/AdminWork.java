@@ -144,7 +144,7 @@ public class AdminWork extends Fragment {
                     public void onErrorResponse(VolleyError error) {
 //                        Log.d("REVIEW", error.getMessage());
                         if (getContext() != null) {
-                            Toast.makeText(context, "Volley Error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Failed to connect server..!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 })

@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     EditText email_login,password_login;
     Storage storage=new Storage();
     Button Login;
+    TextView forget;
     private ProgressBar PB;
     Storage store=new Storage();
     @Override
@@ -49,6 +50,13 @@ public class MainActivity extends AppCompatActivity {
         email_login=findViewById(R.id.email_login);
         password_login=findViewById(R.id.password_login);
         Login=findViewById(R.id.login_button);
+        forget=findViewById(R.id.forgetPassword);
+        forget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    startActivity(new Intent(MainActivity.this,forget_password.class));
+            }
+        });
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,8 +156,6 @@ public class MainActivity extends AppCompatActivity {
                                 store.club_no.add(clubId);
                                 store.member_club.add(clubName);
                             }
-                            Toast.makeText(MainActivity.this, "COMMITEE IN CLUB"+store.club_name+" "+ store.arrayList, Toast.LENGTH_SHORT).show();
-                            Toast.makeText(MainActivity.this, ""+response.getJSONObject("data").getInt("adminInClubCount")+" "+response.getJSONObject("data").getInt("committeeInClubCount"), Toast.LENGTH_SHORT).show();
 
                             Log.d("NSS",user_id);
                             Gson gson = new Gson();
@@ -162,8 +168,9 @@ public class MainActivity extends AppCompatActivity {
                                 store.saveId(user_id);
                                 store.saveName(user);
                                 int count=count1+count2;
+                                store.admin=count1;
                                 store.saveRole(count);
-                                Toast.makeText(MainActivity.this, "Hii"+store.getKeyUsername(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
                                 intent.putExtra("role1",count1);
                                 intent.putExtra("role2",count2);
                                 startActivity(intent);
@@ -177,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
                         } catch (Exception e) {
                             PB.setVisibility(View.GONE);
                             e.printStackTrace();
-                            Toast.makeText(MainActivity.this, "Login Failed"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Login Failed due to "+e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -191,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         else{
 
-                            Toast.makeText(MainActivity.this, "Volley Error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Failed to Connect Server..!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

@@ -47,7 +47,7 @@ public class commentsBoxAdapter extends RecyclerView.Adapter<commentsBoxAdapter.
         TextView commenterName,comment;
             public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            commenterName=itemView.findViewById(R.id.commenter_name);
+                commenterName=itemView.findViewById(R.id.commenter_name);
                 Log.d("ARRAY","VALUE of COMMENTER NAME");
             comment=itemView.findViewById(R.id.Usercomment);
         }

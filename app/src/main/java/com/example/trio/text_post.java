@@ -66,7 +66,6 @@ public class text_post extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedId=store.club_name.get(position);
-                Toast.makeText(text_post.this, "Hii"+selectedId, Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -117,7 +116,7 @@ public class text_post extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             if(response.getString("status").equals("Success")){
-                                Toast.makeText(text_post.this, "Send successfully", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(text_post.this, "Post created successfully", Toast.LENGTH_SHORT).show();
                                 onBackPressed();
                             }
                         } catch (JSONException e) {
@@ -129,7 +128,7 @@ public class text_post extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Kishore",error.getMessage());
-                        Toast.makeText(text_post.this, "Volley Error"+error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(text_post.this, "Failed to connect server..!", Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override

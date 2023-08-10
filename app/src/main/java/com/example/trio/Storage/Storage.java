@@ -8,6 +8,7 @@ public class Storage
     public static ArrayList<String> clubNames=new ArrayList<>();
     public static ArrayList<Integer> clubIDNames=new ArrayList<>();
     public static String MainAdmin;
+    public static int admin=0;
 
     public void clubAdd(){
         clubNames.add("Select Your club");
@@ -73,10 +74,14 @@ public class Storage
         club_name.clear();
         member_club.clear();
         club_no.clear();
+        admin=0;
         MainAdmin=" ";
         user_id="user_id";
         username=" ";
         KEY_USERNAME=" ";
+    }
+    public int getData(){
+        return admin;
     }
     public void saveRole(int role){
         this.role=role;
