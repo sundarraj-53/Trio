@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ public class text_post extends AppCompatActivity {
     EditText text_msg, captions, tag;
     Spinner clubs;
     CheckBox check;
+    private ProgressBar PB;
     int selectedId;
     boolean mode = false;
     Storage store = new Storage();
@@ -45,6 +47,7 @@ public class text_post extends AppCompatActivity {
         text_msg = findViewById(R.id.text_edit);
         captions = findViewById(R.id.captions_edit);
         tag = findViewById(R.id.text_tag);
+        PB=findViewById(R.id.idPBLoading);
         clubs=findViewById(R.id.spinner_adt);
         back=findViewById(R.id.back);
         check = findViewById(R.id.radio);
@@ -89,6 +92,7 @@ public class text_post extends AppCompatActivity {
                 Log.d("tags",tags);
                 if (text != null) {
                     try {
+                        PB.setVisibility(View.VISIBLE);
                         sendData(text, Captions,selectedId, tags, mode);
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
@@ -108,12 +112,13 @@ public class text_post extends AppCompatActivity {
         json.put("club",selectedId);
         json.put("tags", tags);
         json.put("modes", mode);
-        Toast.makeText(text_post.this, "Hii"+store.getKeyUsername(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(text_post.this, "Hii"+store.getKeyUsername(), Toast.LENGTH_SHORT).show();
         RequestQueue queue = Volley.newRequestQueue(text_post.this);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, json,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        PB.setVisibility(View.GONE);
                         try {
                             if(response.getString("status").equals("Success")){
                                 Toast.makeText(text_post.this, "Post created successfully", Toast.LENGTH_SHORT).show();
@@ -127,6 +132,7 @@ public class text_post extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        PB.setVisibility(View.GONE);
                         Log.e("Kishore",error.getMessage());
                         Toast.makeText(text_post.this, "Failed to connect server..!", Toast.LENGTH_SHORT).show();
                     }

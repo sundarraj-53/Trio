@@ -72,6 +72,7 @@ public class adminAdapter extends RecyclerView.Adapter<adminAdapter.ViewHolder>{
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView name,department,dept_id,club_name;
         Button accept,reject;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name=itemView.findViewById(R.id.request_name);
@@ -80,6 +81,7 @@ public class adminAdapter extends RecyclerView.Adapter<adminAdapter.ViewHolder>{
             accept=itemView.findViewById(R.id.accept_request);
             reject=itemView.findViewById(R.id.reject_request);
             club_name=itemView.findViewById(R.id.club_name);
+
         }
     }
 }

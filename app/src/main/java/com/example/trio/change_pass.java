@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,12 +32,14 @@ public class change_pass extends AppCompatActivity {
     AppCompatButton submit;
     TextView back_btn;
     Storage store=new Storage();
+    private ProgressBar PB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_pass);
         oldpass=findViewById(R.id.passEt);
+        PB=findViewById(R.id.idPBLoading);
         newpass=findViewById(R.id.newEt);
         confirmpass=findViewById(R.id.confirmEt);
         submit=findViewById(R.id.media);
@@ -56,6 +59,7 @@ public class change_pass extends AppCompatActivity {
                 if(!password.isEmpty() && !newPassword.isEmpty() && !confirmPassword.isEmpty()) {
                         if (newPassword.equals(confirmPassword)) {
                             try {
+                                PB.setVisibility(View.VISIBLE);
                                 sendPassword(password, newPassword);
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -92,6 +96,7 @@ public class change_pass extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        PB.setVisibility(View.GONE);
                         Log.d("PASSWORD",response.toString());
                         try {
                             String res = response.getString("status");
@@ -116,6 +121,7 @@ public class change_pass extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        PB.setVisibility(View.GONE);
 //                        Log.d("PASSWORD",error.getMessage());
                         error.printStackTrace();
                         Log.d("register_pass",error.toString());

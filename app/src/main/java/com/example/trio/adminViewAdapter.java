@@ -44,6 +44,7 @@ public class adminViewAdapter extends RecyclerView.Adapter<adminViewAdapter.View
         ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, uio.getClubName());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         holder.clubNames.setAdapter(adapter);
+        holder.email_value.setText(uio.getEmail());
         holder.clubNames.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -77,6 +78,7 @@ public class adminViewAdapter extends RecyclerView.Adapter<adminViewAdapter.View
 
         TextView name,department;
         Spinner clubNames;
+        TextView email_text,email_value;
         androidx.appcompat.widget.AppCompatButton submit;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -84,6 +86,8 @@ public class adminViewAdapter extends RecyclerView.Adapter<adminViewAdapter.View
             department=itemView.findViewById(R.id.user_dept);
             clubNames=itemView.findViewById(R.id.clubSelection);
             submit=itemView.findViewById(R.id.accept);
+            email_text=itemView.findViewById(R.id.email_dept_Text);
+            email_value=itemView.findViewById(R.id.emailid_dept_Text);
         }
     }
 }

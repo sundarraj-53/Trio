@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -33,6 +34,7 @@ public class AdminWork extends Fragment {
     RecyclerView recyclerView;
     Storage store=new Storage();
     adminViewAdapter adminAdapter;
+    private ProgressBar PB;
     AdminWork adminWork;
 
     ArrayList<AdminHolder> viewList;
@@ -41,12 +43,14 @@ public class AdminWork extends Fragment {
                              Bundle savedInstanceState){
         View view=inflater.inflate(R.layout.fragment_admin_work, container, false);
         recyclerView=view.findViewById(R.id.recycle);
+        PB=view.findViewById(R.id.idPBLoading);
         adminWork=new AdminWork();
         viewList=new ArrayList<AdminHolder>();
         adminAdapter = new adminViewAdapter(getContext(), viewList,adminWork);
         recyclerView.setAdapter(adminAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
+        PB.setVisibility(View.VISIBLE);
         loadDetails();
         return view;
     }
@@ -59,23 +63,28 @@ public class AdminWork extends Fragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        PB.setVisibility(View.GONE);
                         try {
                             JSONArray array=response.getJSONObject("data").getJSONArray("eligibleToJoinAsAdminUsersList");
-                            Log.d("ADMIN SELECTION", String.valueOf(array));
+                            Log.d("SELVAM", String.valueOf(array));
                             int j=response.getInt("result");
+                            Log.d("SELVAM",String.valueOf(j));
                             for(int i=0;i<j;i++){
                                 ArrayList<String> clubName=new ArrayList<>();
                                 clubName.add("Select club");
                                 ArrayList<Integer>clubId=new ArrayList<>();
                                 clubId.add(0);
                                 JSONObject newjson=array.getJSONObject(i);
+                                Log.d("SELVAM",newjson.toString());
                                 String userId=newjson.getString("userId");
                                 Log.d("ADMIN SELECTION",userId);
-                                String first=newjson.getString("firstName");
-                                String last=newjson.getString("lastName");
-                                String name=first+" "+last;
-                                Log.d("ADMIN SELECTION",name);
+                                String firstName = newjson.optString("firstName", "");
+                                String lastName = newjson.optString("lastName", "");
+                                String name=firstName+" "+lastName;
+                                Log.d("NAME",name);
+//                                Log.d("SELVAM",name);
                                 String department=newjson.getString("department");
+                                String email=newjson.getString("email");
                                 Log.d("ADMIN SELECTION",department);
                                 JSONArray rew=newjson.getJSONArray("clubs");
                                 for(int k=0;k<rew.length();k++){
@@ -84,7 +93,7 @@ public class AdminWork extends Fragment {
                                     clubName.add(jio.getString("clubName"));
                                 }
                                 Log.d("ADMIN SELECTION",clubId+" "+clubName);
-                                viewList.add(new AdminHolder(getContext(),userId,name,department,clubId,clubName));
+                                viewList.add(new AdminHolder(getContext(),userId,name,department,clubId,clubName,email));
                             }
                             adminAdapter.notifyDataSetChanged();
                         } catch (JSONException e) {
@@ -95,6 +104,7 @@ public class AdminWork extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        PB.setVisibility(View.GONE);
                         if (getContext() != null) {
                             Toast.makeText(getContext(), "Volley Error", Toast.LENGTH_SHORT).show();
                         }
@@ -114,6 +124,7 @@ public class AdminWork extends Fragment {
     }
 
     public void sendData(Context context, String userId, int[] selectedId) throws JSONException {
+        PB.setVisibility(View.VISIBLE);
         int id=selectedId[0];
         Log.d("JACK",id+" "+userId);
         String url="https://ecapp.onrender.com/api/v1/users/request/"+userId+"/"+id;
@@ -126,6 +137,7 @@ public class AdminWork extends Fragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        PB.setVisibility(View.GONE);
                         try {
                             if(response.getString("status").equals("success")){
                                 Toast.makeText(context, "User Added  Successfully", Toast.LENGTH_SHORT).show();
@@ -142,7 +154,7 @@ public class AdminWork extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-//                        Log.d("REVIEW", error.getMessage());
+                        PB.setVisibility(View.GONE);
                         if (getContext() != null) {
                             Toast.makeText(context, "Failed to connect server..!", Toast.LENGTH_SHORT).show();
                         }

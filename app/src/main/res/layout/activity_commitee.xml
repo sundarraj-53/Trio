@@ -8,6 +8,17 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Back"
+        android:id="@+id/back"
+        android:textSize="18dp"
+        android:layout_marginTop="15dp"
+        android:padding="20dp"
+        android:textColor="@color/black"
+        android:drawableLeft="@drawable/baseline_arrow_back_24"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Commitee Selection"
         android:id="@+id/title_login"
         android:gravity="center_horizontal"
@@ -17,6 +28,14 @@
         android:textStyle="bold"
         android:fontFamily="@font/title"
         />
+    <ProgressBar
+        android:id="@+id/idPBLoading"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="2dp"
+        android:visibility="gone" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

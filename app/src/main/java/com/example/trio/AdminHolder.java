@@ -7,8 +7,15 @@ import java.util.ArrayList;
 public class AdminHolder {
     private Context context;
     private String userId;
+    private String email;
     private String name;
+    public String getEmail() {
+        return email;
+    }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
     public String getUserId() {
         return userId;
     }
@@ -53,13 +60,14 @@ public class AdminHolder {
     private ArrayList<Integer> clubId;
     private ArrayList<String> clubName;
 
-    public AdminHolder(Context context, String userId, String name, String department, ArrayList<Integer> clubId, ArrayList<String> clubName) {
+    public AdminHolder(Context context, String userId, String name, String department, ArrayList<Integer> clubId, ArrayList<String> clubName, String email) {
         this.context = context;
         this.userId = userId;
         this.name = name;
         this.department = department;
         this.clubId = clubId;
         this.clubName = clubName;
+        this.email=email;
     }
 
 

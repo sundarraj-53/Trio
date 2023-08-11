@@ -95,8 +95,8 @@ public class UserFragment extends Fragment {
     }
 
     private void loadUserDetails() {
-        String url="http://10.11.6.27:3000/api/v1/users/user";
-//        String url="https://ecapp.onrender.com/api/v1/users/user";
+//        String url="http://10.11.6.27:3000/api/v1/users/user";
+        String url="https://ecapp.onrender.com/api/v1/users/user";
         JSONObject json=new JSONObject();
         RequestQueue queue= Volley.newRequestQueue(getContext());
         JsonObjectRequest request=new JsonObjectRequest(Request.Method.GET, url,json,

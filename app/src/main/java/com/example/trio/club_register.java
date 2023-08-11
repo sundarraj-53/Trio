@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,6 +36,7 @@ public class club_register extends AppCompatActivity {
 
     Button register;
     Storage store=new Storage();
+    private ProgressBar PB;
     CheckBox check;
     ArrayList<Integer> request_club;
     Integer[] array;
@@ -48,6 +50,7 @@ public class club_register extends AppCompatActivity {
         setContentView(R.layout.activity_club_register);
         register=findViewById(R.id.button);
         request_club= new ArrayList<>();
+        PB=findViewById(R.id.idPBLoading);
         back=findViewById(R.id.backbtn);
         arrayList=new ArrayList<club>();
         check=new CheckBox(this);
@@ -58,8 +61,9 @@ public class club_register extends AppCompatActivity {
                 onBackPressed();
             }
         });
+        PB.setVisibility(View.VISIBLE);
         loadClubData();
-        Toast.makeText(this, "HII"+request_club, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "HII"+request_club, Toast.LENGTH_SHORT).show();
         check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -79,6 +83,7 @@ public class club_register extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     getCheckedClubIds();
+                    PB.setVisibility(View.VISIBLE);
                    sendClubData(request_club);
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
@@ -96,14 +101,13 @@ public class club_register extends AppCompatActivity {
             int id=club.get(i);
             uson.put(id);
         }
-        Toast.makeText(club_register.this, "club"+club, Toast.LENGTH_LONG).show();
         json.put("clubs",uson);
-        Toast.makeText(club_register.this, ""+club, Toast.LENGTH_SHORT).show();
         RequestQueue queue = Volley.newRequestQueue(club_register.this);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.PATCH, url, json,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        PB.setVisibility(View.GONE);
                         try {
 //                            Toast.makeText(club_register.this, "response" + response, Toast.LENGTH_SHORT).show();
                             String res=response.getString("status");
@@ -126,6 +130,7 @@ public class club_register extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        PB.setVisibility(View.GONE);
                         NetworkResponse networkResponse = error.networkResponse;
                         if (networkResponse != null && networkResponse.statusCode == 300) {
                            onBackPressed();
@@ -165,6 +170,7 @@ public class club_register extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        PB.setVisibility(View.GONE);
                         try {
                             Toast.makeText(club_register.this, "response" + response, Toast.LENGTH_SHORT).show();
                             JSONArray dataObject = response.getJSONObject("data").getJSONArray("userNotJoinedClubList");
@@ -189,6 +195,7 @@ public class club_register extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        PB.setVisibility(View.GONE);
                         NetworkResponse networkResponse = error.networkResponse;
                         if (networkResponse != null && networkResponse.statusCode == 300) {
                             startActivity(new Intent(club_register.this, com.example.trio.signUp.register.class));

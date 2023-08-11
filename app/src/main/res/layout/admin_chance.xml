@@ -54,6 +54,26 @@
             android:text="Blood value"
             android:fontFamily="@font/home"
             android:textSize="20dp" />
+        <TextView
+            android:id="@+id/email_dept_Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/user_dept_text"
+            android:text="Email"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/home"
+            android:textSize="20dp" />
+        <TextView
+            android:id="@+id/emailid_dept_Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/user_dept"
+            android:text="Email"
+            android:layout_marginLeft="87dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/home"
+            android:textSize="20dp" />
         <Spinner
             android:layout_width="100dp"
             android:layout_height="wrap_content"
@@ -67,7 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/user_dept"
+            android:layout_below="@+id/emailid_dept_Text"
             android:layout_marginTop="25dp"
             android:text="Accept"
             android:id="@+id/accept"

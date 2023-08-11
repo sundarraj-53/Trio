@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ import org.json.JSONObject;
 public class register_pass extends AppCompatActivity {
 
     TextView register;
+    private ProgressBar PB;
     private String TAG="REGISTER_PASS";
     EditText email,input1,input2,input3,input4;
     Button Next;
@@ -35,6 +37,7 @@ public class register_pass extends AppCompatActivity {
         register=findViewById(R.id.registerpass_title);
         email=findViewById(R.id.email_registerpass);
         input1=findViewById(R.id.input1_registerpass);
+        PB=findViewById(R.id.idPBLoading);
         input2=findViewById(R.id.input2_registerpass);
         input3=findViewById(R.id.input3_registerpass);
         input4=findViewById(R.id.input4_registerpass);
@@ -53,10 +56,7 @@ public class register_pass extends AppCompatActivity {
                     String email=i.getStringExtra("Email");
                     String Student=i.getStringExtra("Type");
                     try {
-//                        Intent u=new Intent(register_pass.this,register.class);
-//                        u.putExtra("Email",email);
-//                        u.putExtra("type",Student);
-//                        startActivity(u);
+                        PB.setVisibility(View.VISIBLE);
                         postEmailPassword(email,password,Student);
                     }
                     catch (JSONException e) {
@@ -81,6 +81,7 @@ public class register_pass extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        PB.setVisibility(View.GONE);
                             try {
                                  String res=response.getString("status");
                                  Log.d("Hii",res);
@@ -104,6 +105,7 @@ public class register_pass extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        PB.setVisibility(View.GONE);
                         error.printStackTrace();
                         Log.d("register_pass",error.toString());
                         Toast.makeText(register_pass.this, "Failed to connect to server..!", Toast.LENGTH_SHORT).show();

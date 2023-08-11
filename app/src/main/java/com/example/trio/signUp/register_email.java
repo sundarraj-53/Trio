@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ import java.util.regex.Pattern;
 public class register_email extends AppCompatActivity{
 
     TextView register_title;
+    private ProgressBar PB;
     private static final int MY_TIMEOUT_MS = 1000000;
     EditText email_register;
     Button next;
@@ -38,6 +40,7 @@ public class register_email extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_email);
         register_title=findViewById(R.id.register_title);
+        PB=findViewById(R.id.idPBLoading);
         email_register=findViewById(R.id.email_register);
         next=findViewById(R.id.next_register);
         next.setOnClickListener(new View.OnClickListener() {
@@ -49,19 +52,13 @@ public class register_email extends AppCompatActivity{
                         if(Character.isDigit(email.charAt(0))) {
                             int year = Integer.parseInt(email.substring(0, 2));
                             int currentYear = Calendar.getInstance().get(Calendar.YEAR) % 100;
+                            PB.setVisibility(View.VISIBLE);
                             if (Math.abs(currentYear - year) > 4) {
                                 email_register.setError("Sorry user you are not eligible");
                             }
                             if (Math.abs(currentYear - year) < 5) {
                                 try {
                                     String Student="Student";
-//                                //Testing Purpose so it can be removed at last
-//                                Intent i=new Intent(register_email.this,register_pass.class);
-//                                i.putExtra("Email",email);
-//                                i.putExtra("Type",Student);
-//                                startActivity(i);
-//                                //End
-//                                    Toast.makeText(register_email.this, "If-postEmail(email)", Toast.LENGTH_SHORT).show();
                                     postEmail(email,Student);
                                 } catch (JSONException e) {
                                     throw new RuntimeException(e);
@@ -71,11 +68,6 @@ public class register_email extends AppCompatActivity{
                         else {
                                 try {
                                     String Student="Faculty";
-//                                    Intent i=new Intent(register_email.this,register_pass.class);
-//                                    i.putExtra("Email",email);
-//                                    i.putExtra("Type",Student);
-//                                    startActivity(i);
-//                                    Toast.makeText(register_email.this, "else-Request Sent", Toast.LENGTH_SHORT).show();
                                     postEmail(email,Student);
                                 } catch (JSONException e) {
                                     throw new RuntimeException(e);
@@ -83,6 +75,7 @@ public class register_email extends AppCompatActivity{
                             }
                         }
                     else{
+                        PB.setVisibility(View.GONE);
                         email_register.setError("Please Enter our college Email");
                     }
 
@@ -105,10 +98,9 @@ public class register_email extends AppCompatActivity{
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-//                        Toast.makeText(register_email.this, "Waiting For response", Toast.LENGTH_SHORT).show();
+                          PB.setVisibility(View.GONE);
                         try {
                             String res = response.getString("status");
-//                            Toast.makeText(register_email.this, "Response received", Toast.LENGTH_SHORT).show();
                             if (res.equals("success")) {
                                Intent i=new Intent(register_email.this, register_pass.class);
                                i.putExtra("Email",email);
@@ -132,6 +124,7 @@ public class register_email extends AppCompatActivity{
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        PB.setVisibility(View.GONE);
                         Log.d("Hii", String.valueOf(error));
                         Toast.makeText(register_email.this, "Failed to connect to server..!", Toast.LENGTH_LONG).show();
 

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ public class admin_Request extends Fragment {
     TextView center;
     Storage store=new Storage();
     private Context mContext;
+    private ProgressBar PB;
     public String Name,dept,club;
     int clubid;
     String userid;
@@ -60,6 +62,7 @@ public class admin_Request extends Fragment {
         recyclerView=v.findViewById(R.id.recycle);
         clubName=v.findViewById(R.id.club_name);
         name=v.findViewById(R.id.request_name);
+        PB=v.findViewById(R.id.idPBLoading);
         accept=v.findViewById(R.id.accept_request);
         reject=v.findViewById(R.id.reject_request);
         center=v.findViewById(R.id.no_request);
@@ -68,6 +71,7 @@ public class admin_Request extends Fragment {
         if(store.getData()>0){
             clubSelection.setVisibility(View.VISIBLE);
         }
+        PB.setVisibility(View.VISIBLE);
         loadData(getContext());
         clubSelection.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +92,7 @@ public class admin_Request extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d("SANTHA", String.valueOf(response));
-//                        Toast.makeText(getContext(), ""+response, Toast.LENGTH_SHORT).show();
+                        PB.setVisibility(View.GONE);
                         try {
                             Log.d("SUNDAR", String.valueOf(response));
                             arrayList.clear();
@@ -129,6 +133,7 @@ public class admin_Request extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        PB.setVisibility(View.GONE);
                         if (getContext() != null) {
                             Toast.makeText(getContext(), "Failed to Connect Server...!", Toast.LENGTH_SHORT).show();
                         }
@@ -145,16 +150,9 @@ public class admin_Request extends Fragment {
         };
         queue.add(request);
     }
-//    public void getValue(String dept_id,boolean b,int clubid) throws JSONException {
-//        userId=dept_id;
-//        status=b;
-//        clubId=clubid;
-//
-//        sendValue(getContext(),userId,status,clubId);
-//        loadData(getContext());
-//    }
 
     public void sendValue(Context context, String dept_id, boolean b, int club_id) throws JSONException {
+        PB.setVisibility(View.VISIBLE);
         Log.d("ASHWIN", String.valueOf(context));
 //        String url="http://10.11.6.27:3000/api/v1/clubs/request/"+dept_id+"/"+club_id;
 
@@ -167,11 +165,7 @@ public class admin_Request extends Fragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        try {
-                            Log.d("RESPONSE",response.getString("status"));
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
+                        PB.setVisibility(View.GONE);
                         try {
                             if(response.getString("status").equals("success")){
                                 Log.d("status",response.getString("status"));
@@ -190,6 +184,7 @@ public class admin_Request extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        PB.setVisibility(View.GONE);
                         if (getContext() != null) {
                             Toast.makeText(getContext(), "Failed to connect server..!", Toast.LENGTH_SHORT).show();
                         }

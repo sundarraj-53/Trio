@@ -106,7 +106,7 @@ public class comment_activity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Toast.makeText(comment_activity.this, "Hello", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(comment_activity.this, "Hello", Toast.LENGTH_SHORT).show();
                         Log.d("RESPONSE", String.valueOf(response));
                         try {
                             if(response.getString("status").equals("success")){

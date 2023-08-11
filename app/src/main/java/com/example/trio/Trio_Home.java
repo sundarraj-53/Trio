@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,6 +52,7 @@ public class Trio_Home extends Fragment {
     ImageView adminimg;
     ImageButton cmnd;
     TextView noPOst;
+    private ProgressBar PB;
     private ArrayList<Trio> arrayList;
     private Context context;
 
@@ -68,6 +70,7 @@ public class Trio_Home extends Fragment {
         recyclerView=view.findViewById(R.id.reycler_view);
         clubs=view.findViewById(R.id.spinner_adt);
         cnd=view.findViewById(R.id.count);
+        PB=view.findViewById(R.id.idPBLoading);
         adminimg=view.findViewById(R.id.selectionadmin);
         noPOst=view.findViewById(R.id.noPost);
         cmnd=view.findViewById(R.id.comment);
@@ -77,12 +80,12 @@ public class Trio_Home extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(recyclerAdapter);
-        Toast.makeText(context, "Hii"+store.getMember(), Toast.LENGTH_SHORT).show();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, store.getHomeFilter());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         clubs.setAdapter(adapter);
         tag=view.findViewById(R.id.tag);
-        Toast.makeText(context, "Hii"+store.getRole(), Toast.LENGTH_SHORT).show();
+        PB.setVisibility(View.VISIBLE);
+        loadPostDetails();
         if(store.getRole()!=0){
             adminimg.setVisibility(View.VISIBLE);
         }
@@ -96,7 +99,7 @@ public class Trio_Home extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedId=store.clubIDNames.get(position);
-                Toast.makeText(getContext(), "Hii"+selectedId, Toast.LENGTH_SHORT).show();
+                PB.setVisibility(View.VISIBLE);
                 if(selectedId!=0) {
                     sendData(selectedId);
                 }
@@ -113,8 +116,8 @@ public class Trio_Home extends Fragment {
     }
 
     private void sendData(int selectedId) {
-        String url="http://10.11.6.27:3000/api/v1/posts?clubId="+selectedId;
-//        String url="https://ecapp.onrender.com/api/v1/posts?clubId="+selectedId;
+//        String url="http://10.11.6.27:3000/api/v1/posts?clubId="+selectedId;
+        String url="https://ecapp.onrender.com/api/v1/posts?clubId="+selectedId;
         Log.d("BOTTLE", String.valueOf(selectedId));
         JSONObject json=new JSONObject();
         RequestQueue queue= Volley.newRequestQueue(getContext());
@@ -122,6 +125,7 @@ public class Trio_Home extends Fragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        PB.setVisibility(View.GONE);
                         Log.d("FINEARTS", String.valueOf(response));
                         try {
                             arrayList.clear();
@@ -180,6 +184,7 @@ public class Trio_Home extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        PB.setVisibility(View.GONE);
                         if (getContext() != null) {
                             Toast.makeText(getContext(), "Volley Error", Toast.LENGTH_SHORT).show();
                         }
@@ -198,14 +203,15 @@ public class Trio_Home extends Fragment {
         queue.add(request);
     }
     private void loadPostDetails() {
-        String url="http://10.11.6.27:3000/api/v1/posts?clubId=";
-//        String url="https://ecapp.onrender.com/api/v1/posts?clubId=";
+//        String url="http://10.11.6.27:3000/api/v1/posts?clubId=";
+        String url="https://ecapp.onrender.com/api/v1/posts?clubId=";
         JSONObject json=new JSONObject();
         RequestQueue queue= Volley.newRequestQueue(getContext());
         JsonObjectRequest request=new JsonObjectRequest(Request.Method.GET, url,json,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        PB.setVisibility(View.GONE);
                         arrayList.clear();
                         try {
                             JSONArray dataObject = response.getJSONObject("data").getJSONArray("posts");
@@ -259,6 +265,7 @@ public class Trio_Home extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        PB.setVisibility(View.GONE);
                         if (getContext() != null) {
                             Toast.makeText(getContext(), "Failed to Connect Server..!", Toast.LENGTH_SHORT).show();
                         }

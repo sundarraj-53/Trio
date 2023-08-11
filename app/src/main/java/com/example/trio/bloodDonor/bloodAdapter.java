@@ -52,9 +52,11 @@ public class bloodAdapter extends RecyclerView.Adapter<bloodAdapter.ViewHolder>{
         holder.blood_value.setText(ble.getBloodgroup());
         Log.d("SUNDAR",ble.getPhoneno());
         holder.phoneNo_value.setText(ble.getPhoneno());
-        Glide.with(context)
-                .load(ble.getProfile())
-                .into(holder.image);
+        if(!ble.getProfile().isEmpty()) {
+            Glide.with(context)
+                    .load(ble.getProfile())
+                    .into(holder.image);
+        }
     }
 
     @Override

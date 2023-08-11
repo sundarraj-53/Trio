@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,6 +63,7 @@ public class Edit_profile extends AppCompatActivity {
     ImageButton newadd;
     TextView back;
     public int select=-1;
+    private ProgressBar PB;
     Uri uri;
     String sImage;
     ArrayAdapter<String> adapter;
@@ -71,6 +73,7 @@ public class Edit_profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
         first = findViewById(R.id.firstname);
+        PB=findViewById(R.id.idPBLoading);
         last = findViewById(R.id.lastname);
         phoneno = findViewById(R.id.phoneNoEt);
         department_r = findViewById(R.id.DepartmentEt);
@@ -79,6 +82,7 @@ public class Edit_profile extends AppCompatActivity {
         back=findViewById(R.id.back);
         circleImageView=findViewById(R.id.user_profile);
         adapter=setAdapter();
+        PB.setVisibility(View.VISIBLE);
         loadUserDetails();
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +94,6 @@ public class Edit_profile extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 sendUserDetails();
             }
         });
@@ -128,6 +131,7 @@ public class Edit_profile extends AppCompatActivity {
             }
             if (!firstName.isEmpty() && !lastName.isEmpty() && !Department.isEmpty() && !phoneNo.isEmpty()) {
                 try {
+                    PB.setVisibility(View.VISIBLE);
                     postMethod(firstName, lastName, Department, phoneNo);
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
@@ -154,6 +158,7 @@ public class Edit_profile extends AppCompatActivity {
             if (!firstName.isEmpty() && !lastName.isEmpty() && !Department.isEmpty() && !phoneNo.isEmpty()) {
                 try {
                     userImage();
+                    PB.setVisibility(View.VISIBLE);
                     postMethod(firstName, lastName, Department, phoneNo);
                 }
                 catch (Exception e){
@@ -189,7 +194,6 @@ public class Edit_profile extends AppCompatActivity {
                 Log.d("RISHI","RESPONSE RECEIVED");
                 Log.d("RISHI", String.valueOf(response));
                 Log.d("ANNAN", call.toString());
-
                 if(response.isSuccessful()) {
                     Log.d("ANNAN", "HELLO");
                     Log.d("ANNAN",response.body().getMessage());
@@ -208,6 +212,7 @@ public class Edit_profile extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<Example> call, Throwable t)  {
+                PB.setVisibility(View.GONE);
                 Log.d("RESPONSE",t.toString());
                 Toast.makeText(Edit_profile.this, "Error Occured due to"+t.toString(), Toast.LENGTH_SHORT).show();
             }
@@ -225,6 +230,7 @@ public class Edit_profile extends AppCompatActivity {
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response) {
+                        PB.setVisibility(View.GONE);
                         try{
                             Log.d("JSONOBJECT","HII");
                             String res=response.getString("status");
@@ -246,6 +252,7 @@ public class Edit_profile extends AppCompatActivity {
                 }){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
+                PB.setVisibility(View.GONE);
                 Map<String, String> headers = new HashMap<>();
                 String token=store.getKeyUsername();
                 headers.put("Authorization","Bearer " + token);
@@ -291,6 +298,7 @@ public class Edit_profile extends AppCompatActivity {
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response) {
+                        PB.setVisibility(View.GONE);
                         try{
                             Log.d("JSONOBJECT","HII");
                             String res=response.getString("status");
@@ -306,6 +314,7 @@ public class Edit_profile extends AppCompatActivity {
                 new Response.ErrorListener(){
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        PB.setVisibility(View.GONE);
                         error.printStackTrace();
                         Toast.makeText(Edit_profile.this, "Failed to connect server..!", Toast.LENGTH_SHORT).show();
                     }
@@ -328,8 +337,8 @@ public class Edit_profile extends AppCompatActivity {
     }
     private void loadUserDetails()
     {
-        String url="http://10.11.6.27:3000/api/v1/users/user";
-//        String url="https://ecapp.onrender.com/api/v1/users/user";
+//        String url="http://10.11.6.27:3000/api/v1/users/user";
+        String url="https://ecapp.onrender.com/api/v1/users/user";
         JSONObject json=new JSONObject();
         RequestQueue queue= Volley.newRequestQueue(Edit_profile.this);
         ArrayList subt=new ArrayList();
@@ -337,6 +346,7 @@ public class Edit_profile extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        PB.setVisibility(View.GONE);
                         try {
                             response=response.getJSONObject("data").getJSONObject("user");
                             Log.d("ASHWIN", String.valueOf(response));
@@ -369,7 +379,7 @@ public class Edit_profile extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        PB.setVisibility(View.GONE);
                             Toast.makeText(Edit_profile.this, "Failed to connect server..!", Toast.LENGTH_SHORT).show();
                     }
                 })

@@ -16,6 +16,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,6 +57,7 @@ public class image_post extends AppCompatActivity {
     boolean mode=false;
     Spinner clubs;
     int selectedId;
+    private ProgressBar PB;
     Uri uri;
     TextView change;
 
@@ -65,6 +67,7 @@ public class image_post extends AppCompatActivity {
         setContentView(R.layout.activity_image_post);
         back=findViewById(R.id.backbtn);
         view=findViewById(R.id.image);
+        PB=view.findViewById(R.id.idPBLoading);
         clubs=findViewById(R.id.spinner_adt);
         add=findViewById(R.id.newPost);
         captions=findViewById(R.id.edit);
@@ -79,7 +82,6 @@ public class image_post extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedId=store.club_name.get(position);
-                Toast.makeText(image_post.this, "Hii"+selectedId, Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -107,6 +109,9 @@ public class image_post extends AppCompatActivity {
                 String caption=captions.getText().toString();
                 String tags=tag.getText().toString();
                 if(!caption.isEmpty() && !tags.isEmpty() && selectedId!=0){
+                    PB.setVisibility(View.VISIBLE);
+                    Toast.makeText(image_post.this, "Datas send to the server..!", Toast.LENGTH_SHORT).show();
+                    post.setClickable(false);
                     uploadImage(caption,tags,mode,"image",selectedId);
                 }
             }
@@ -143,17 +148,14 @@ public class image_post extends AppCompatActivity {
     }
 
     private void uploadImage(String caption, String tags, boolean mode,String format,int id) {
-        Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
-//        String token=store.getKeyUsername();
         Retrofit retrofit=new Retrofit.Builder().baseUrl("http://10.11.6.27:3000/api/v1/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(getOkHttpClient(store.getKeyUsername()))
                 .build();
         File file=new File(sImage);
-//        Log.d("file",file)
         if (!file.exists()) {
             Log.d("RISHI", "Image file does not exist");
-            return;  // Exit the method if the image file is not found
+            return;
         }
         else{
             Log.d("RISHI","IMAGE PRESENT");
@@ -171,7 +173,6 @@ public class image_post extends AppCompatActivity {
                 Log.d("RISHI","RESPONSE RECEIVED");
                 Log.d("RISHI", String.valueOf(response));
                 Log.d("ANNAN", call.toString());
-
                 if(response.isSuccessful()) {
                     getOtherData(caption,tags,mode,format,id);
                     Log.d("ANNAN", "HELLO");
@@ -181,12 +182,14 @@ public class image_post extends AppCompatActivity {
                 }
 
                 else{
+                    PB.setVisibility(View.GONE);
                     Log.d("RISHI", "Response not successful. Code: " + response.code());
                     Toast.makeText(image_post.this, "Post Not  Created Successfully", Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
             public void onFailure(Call<Example> call, Throwable t)  {
+                PB.setVisibility(View.GONE);
                 Log.d("RESPONSE",t.toString());
                 Toast.makeText(image_post.this, "Failed to connect server..!", Toast.LENGTH_SHORT).show();
             }
@@ -221,7 +224,7 @@ public class image_post extends AppCompatActivity {
                 Log.d("RISHI","RESPONSE RECEIVED");
                 Log.d("RISHI", String.valueOf(response));
                 Log.d("BROTHER", call.toString());
-
+                PB.setVisibility(View.GONE);
                 if(response.isSuccessful()) {
                     Log.d("BROTHER", "HELLO");
                     Log.d("BROTHER",response.body().getMessage());
@@ -235,6 +238,7 @@ public class image_post extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<Example> call, Throwable t) {
+                PB.setVisibility(View.GONE);
                 Log.d("RESPONSE",t.toString());
                 Toast.makeText(image_post.this, "Failed to connect server..!", Toast.LENGTH_SHORT).show();
             }

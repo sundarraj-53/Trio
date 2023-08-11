@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ public class register extends AppCompatActivity {
 
     Intent i;
     String email, role;
+    private ProgressBar PB;
     TextView title;
     EditText fname, lname, Password, confirmpassword, phoneno;
     Spinner Department, blood;
@@ -50,6 +52,7 @@ public class register extends AppCompatActivity {
         title = findViewById(R.id.registeruser_title);
         fname = findViewById(R.id.Fname_registeruser_student);
         lname = findViewById(R.id.Lname_registeruser_student);
+        PB=findViewById(R.id.idPBLoading);
         Department = findViewById(R.id.Department_registeruser_student);
         Password = findViewById(R.id.password_registeruser_student);
         confirmpassword = findViewById(R.id.conpassword_registeruser_student);
@@ -87,11 +90,12 @@ public class register extends AppCompatActivity {
                 String confirmPassword = confirmpassword.getText().toString();
                 String phoneNo = phoneno.getText().toString();
                 String bloodGroup = blood.getSelectedItem().toString();
-                Toast.makeText(register.this, "BLood Group"+bloodGroup, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(register.this, "BLood Group"+bloodGroup, Toast.LENGTH_SHORT).show();
                 if (!firstName.isEmpty() && !lastName.isEmpty() && !department.isEmpty() && !password.isEmpty() && !confirmPassword.isEmpty() && !phoneNo.isEmpty() && bloodGroup.isEmpty() || !bloodGroup.isEmpty()) {
                     if (isValidPassword(password)) {
                         if (password.equals(confirmPassword)) {
                             try {
+                                PB.setVisibility(View.VISIBLE);
                                 postMethod(role, email, firstName, lastName, department, password,phoneNo,bloodGroup);
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
@@ -141,6 +145,7 @@ public class register extends AppCompatActivity {
             new Response.Listener<JSONObject>(){
             @Override
             public void onResponse(JSONObject response) {
+                PB.setVisibility(View.GONE);
                 try{
                     String res=response.getString("status");
                     if(res.equals("success")){
@@ -159,6 +164,7 @@ public class register extends AppCompatActivity {
         new Response.ErrorListener(){
             @Override
             public void onErrorResponse(VolleyError error) {
+                PB.setVisibility(View.GONE);
                 error.printStackTrace();
                 Toast.makeText(register.this, "Failed to connect to server..!", Toast.LENGTH_SHORT).show();
             }

@@ -7,7 +7,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +36,8 @@ public class commitee_activity extends AppCompatActivity {
     Spinner clubs;
     ArrayList<commitee> clubSpinner;
    Storage storage=new Storage();
+    private ProgressBar PB;
+    TextView back_id;
     EditText email;
     Button submit;
     Storage store=new Storage();
@@ -45,17 +49,23 @@ public class commitee_activity extends AppCompatActivity {
         setContentView(R.layout.activity_commitee);
         clubs=findViewById(R.id.spinner_adt);
         email=findViewById(R.id.email_et);
+        PB=findViewById(R.id.idPBLoading);
         clubSpinner=new ArrayList<>();
+        back_id=findViewById(R.id.back);
         submit=findViewById(R.id.submit);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(commitee_activity.this, android.R.layout.simple_spinner_item, store.getArrayList());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         clubs.setAdapter(adapter);
+        back_id.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+
+            }
+        });
         clubs.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                commitee selectedClub= (commitee) parent.getItemAtPosition(position);
-//                int id_value=selectedClub.getId();
-//                Toast.makeText(commitee_activity.this, "ID_VALUE"+id_value, Toast.LENGTH_SHORT).show();
                    selectedId=store.club_name.get(position);
 
 
@@ -73,6 +83,7 @@ public class commitee_activity extends AppCompatActivity {
                 if(!Email.isEmpty() && !clubName.isEmpty()){
                     if(isValidEmail(Email)){
                         try {
+                            PB.setVisibility(View.VISIBLE);
                             sendData(Email,selectedId);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -103,6 +114,7 @@ public class commitee_activity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        PB.setVisibility(View.GONE);
                         try {
                             if(response.getString("status").equals("success")){
                                 Toast.makeText(commitee_activity.this, "Student Added Successfully", Toast.LENGTH_SHORT).show();
@@ -120,6 +132,7 @@ public class commitee_activity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        PB.setVisibility(View.GONE);
                         Toast.makeText(commitee_activity.this, "Failed to connect server..!", Toast.LENGTH_SHORT).show();
                     }
                 })
