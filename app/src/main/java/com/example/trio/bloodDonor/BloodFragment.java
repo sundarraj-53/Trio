@@ -83,7 +83,6 @@ public class BloodFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                selected=parent.getSelectedItem().toString();
                if(!selected.equals("Blood Group")) {
-                   PB.setVisibility(View.VISIBLE);
                    loadBloodData(selected);
                }
                else{
@@ -109,7 +108,6 @@ public class BloodFragment extends Fragment {
                 try {
 //                    adapter.getFilter().filter(s);
                     String searchText = s.toString();
-                    PB.setVisibility(View.VISIBLE);
                     makeServerRequest(searchText,selected);
                 }
                 catch (Exception e){
@@ -136,7 +134,6 @@ public class BloodFragment extends Fragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        PB.setVisibility(View.GONE);
                         try {
                             JSONArray dataObject = response.getJSONObject("data").getJSONArray("user");
                             int j=response.getInt("result");
@@ -168,6 +165,7 @@ public class BloodFragment extends Fragment {
                         }
                         catch (JSONException e)
                         {
+                            PB.setVisibility(View.GONE);
                             throw new RuntimeException(e);
                         }
                     }
@@ -175,7 +173,6 @@ public class BloodFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        PB.setVisibility(View.GONE);
                         if (getContext() != null) {
                             Toast.makeText(getContext(), "Failed to Connect Server..!", Toast.LENGTH_SHORT).show();
                         }
@@ -203,7 +200,6 @@ public class BloodFragment extends Fragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        PB.setVisibility(View.GONE);
                         try {
                             JSONArray dataObject = response.getJSONObject("data").getJSONArray("user");
                             int j=response.getInt("result");
@@ -236,7 +232,6 @@ public class BloodFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        PB.setVisibility(View.GONE);
                         if (getContext() != null) {
                             Toast.makeText(getContext(), "Failed to connect server...!", Toast.LENGTH_SHORT).show();
                         }
