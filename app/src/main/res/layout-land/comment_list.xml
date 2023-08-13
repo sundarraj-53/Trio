@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_alignParentTop="true"
+    android:layout_height="match_parent">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/idCVAuthor"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/user_account"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sundarraj M"
+        android:fontFamily="@font/home"
+        android:id="@+id/commenter_name"
+        android:textSize="23dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="8dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Wow"
+        android:layout_marginTop="10dp"
+        android:id="@+id/Usercomment"
+        android:layout_below="@+id/commenter_name"
+        android:layout_marginLeft="60dp"
+        android:textSize="20dp"
+        />
+</RelativeLayout>

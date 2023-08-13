@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".text_post">
+    <ProgressBar
+        android:id="@+id/idPBLoading"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="2dp"
+        android:visibility="gone" />
+    <TextView
+        android:id="@+id/new_Post_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:fontFamily="@font/home"
+        android:text="New Post"
+        android:textSize="28dp"
+        android:textStyle="bold" />
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/back"
+        android:background="#001C1616"
+        android:id="@+id/back"
+        android:layout_below="@+id/new_Post_title"
+        />
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_check_circle_24"
+        android:background="#00FFFFFF"
+        android:id="@+id/tick"
+        android:visibility="visible"
+        android:layout_marginTop="65dp"
+        android:layout_marginRight="45dp"
+        android:layout_alignParentRight="true"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tick"
+        android:layout_marginTop="85dp"
+        >
+        <androidx.cardview.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/card_post"
+            android:layout_height="match_parent"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            app:cardBackgroundColor="@color/white"
+            >
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    >
+                    <EditText
+                        android:id="@+id/text_edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Text Message"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/newcourse"
+                        android:padding="20dp" />
+                    <EditText
+                        android:id="@+id/captions_edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Captions"
+                        android:layout_below="@+id/text_edit"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/newcourse"
+                        android:padding="20dp" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/General_post"
+                        android:layout_width="match_parent"
+                        android:layout_below="@+id/captions_edit"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#DBE2EF"
+                        >
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/relative"
+                            >
+                            <EditText
+                                android:id="@+id/text_tag"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:hint="Tags"
+                                android:layout_marginTop="15dp"
+                                android:layout_centerHorizontal="true"
+                                android:padding="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:background="@drawable/newcourse"
+                                />
+                            <TextView
+                                android:id="@+id/text_modes"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Modes"
+                                android:layout_marginLeft="10dp"
+                                android:layout_below="@+id/text_tag"
+                                android:layout_marginTop="20dp"
+                                android:textColor="#877A7A"
+                                android:textSize="20dp"
+
+                                />
+                            <CheckBox
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="only for private members"
+                                android:layout_below="@+id/text_modes"
+                                android:id="@+id/radio"
+                                android:textSize="18dp"
+                                android:layout_marginLeft="80dp"
+                                android:padding="5dp"
+
+                                />
+                            <Spinner
+                                android:layout_width="150dp"
+                                android:layout_height="35dp"
+                                android:background="@drawable/course"
+                                android:layout_below="@+id/radio"
+                                android:layout_alignParentLeft="true"
+                                android:id="@+id/spinner_adt"
+                                android:layout_marginTop="35dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginLeft="30dp"
+                                android:layout_marginBottom="150dp"
+                                />
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+
+
+                </RelativeLayout>
+            </ScrollView>
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+</RelativeLayout>

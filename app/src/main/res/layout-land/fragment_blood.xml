@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:windowSoftInputMode="adjustResize"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    tools:context=".bloodDonor.BloodFragment">
+    <include layout="@layout/blood_list"
+        android:visibility="gone"
+        />
+    <include layout="@layout/filter_splash"
+        android:visibility="gone"
+        />
+    <ProgressBar
+        android:id="@+id/idPBLoading"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="2dp"
+        android:visibility="gone" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/blood_donor_title"
+        android:text="Blood donors"
+        android:fontFamily="@font/home"
+        android:textSize="28dp"
+        android:layout_margin="15dp"
+        android:layout_marginLeft="5dp"
+        android:textStyle="bold"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/NouserFound"
+        android:text="No Donors Found"
+        android:fontFamily="@font/home"
+        android:textSize="28dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        android:layout_margin="15dp"
+        android:layout_marginLeft="5dp"
+        android:textStyle="bold"
+        />
+    <EditText
+        android:layout_width="260dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="13dp"
+        android:background="@drawable/custom"
+        android:padding="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_below="@+id/blood_donor_title"
+        android:id="@+id/searchEt"
+        android:hint="Search"
+        android:drawableLeft="@drawable/baseline_search_24"
+        />
+
+    <!--    <ViewStub-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/filter_view"-->
+<!--        android:layout_below="@+id/filter"-->
+<!--        android:layout="@layout/filter_splash"-->
+<!--        />-->
+
+    <Spinner
+        android:id="@+id/filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/blood_donor_title"
+        android:layout_alignParentRight="true"
+        android:dropDownSelector="@drawable/baseline_arrow_drop_down_24"
+        android:textAlignment="textEnd"
+        android:layout_marginTop="75dp"
+        android:background="@drawable/new_spinner"
+        android:layout_marginRight="12dp"
+        android:clickable="true"
+       />
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/searchEt"
+            android:id="@+id/recycle"
+            android:layout_marginTop="55dp"
+            android:layout_centerHorizontal="true"
+            tools:listitem="@layout/blood_list"
+            />
+</RelativeLayout>

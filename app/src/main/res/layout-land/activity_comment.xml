@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".comment_activity">
+    <include layout="@layout/comment_list"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/blood_donor_title"
+        android:text="Comments"
+        android:fontFamily="@font/home"
+        android:textSize="28dp"
+        android:layout_margin="15dp"
+        android:layout_marginLeft="5dp"
+        android:textStyle="bold"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Comments Posted Yet"
+        android:id="@+id/comment_center"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:textSize="25dp"
+        android:textColor="#7C7878"
+        android:visibility="gone"
+        />
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/back"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="-5dp"
+        android:padding="20dp"
+        android:background="#00FFFFFF"
+        android:src="@drawable/comment_exit"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:hint="Write a Comment"
+        android:padding="15dp"
+        android:id="@+id/comment_box"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/custom"
+        />
+    <Button
+        android:layout_width="80dp"
+        android:layout_height="65dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/post_comment"
+        android:background="@drawable/card"
+        android:text="Post"
+        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/blood_donor_title"
+        android:layout_above="@+id/comment_box"
+        android:layout_marginBottom="25dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/comment_list" />
+</RelativeLayout>
